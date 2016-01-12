@@ -1,9 +1,11 @@
 <?php
 require('kint/Kint.class.php');
 
+require_once('db/es_db_users_events.php');
+
 require_once('setup.php');
 require_once('event-manager.php');
-require_once('login-handler.php');
+require_once('register-handler.php');
 
 function es_event_find_users($event) {
     $event_manager = new EventManager($event);

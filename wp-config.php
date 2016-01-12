@@ -112,7 +112,7 @@ if (!defined('WP_DEBUG')) {
 	define('WP_DEBUG', true);
 }
 
-//define('SAVEQUERIES', true);
+define('SAVEQUERIES', true);
 
 //define('FS_METHOD','direct');
 

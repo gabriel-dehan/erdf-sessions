@@ -14,14 +14,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-$events_label_singular = tribe_get_event_label_singular();
-$events_label_plural = tribe_get_event_label_plural();
-
-$event_id = get_the_ID();
-
 if (isset($_POST['subscribe'])) {
-  hd($_POST, wp_get_current_user());
-}
+  $user = wp_get_current_user();
+  $event = get_post($_POST['event_id']);
+  $users_events = new ES_DB_UsersEvents;
+
+  $is_subscribed = $users_events->user_subscribed($user, $event);
+  if (!$is_subscribed) {
+    $users_events->add($user, $event);
+  } else {
+    echo 'You already subscribed';
+  }
+} else {
+
+  $events_label_singular = tribe_get_event_label_singular();
+  $events_label_plural = tribe_get_event_label_plural();
+
+  $event_id = get_the_ID();
+
 ?>
 
 <div id="tribe-events-content" class="tribe-events-single">
@@ -94,3 +104,7 @@ if (isset($_POST['subscribe'])) {
 	<!-- #tribe-events-footer -->
 
 </div><!-- #tribe-events-content -->
+
+<?php
+}
+?>
