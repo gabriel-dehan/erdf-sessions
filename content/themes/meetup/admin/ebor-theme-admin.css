@@ -1,0 +1,51 @@
+select option, select {
+	font-family: sans-serif !important;	
+}
+.post-type-portfolio #formatdiv {
+	display: none;
+}
+.rs-update-notice-wrap {
+	display: none !important;
+}
+
+div.wpb_vc_param_value.content.textarea_html {
+	clear: both;
+	padding-top: 5px;
+}
+.vc_default-templates .vc_templates-image {
+	background-size: cover !important;
+	background-position: center top !important;
+}
+.vc_default-templates .vc_template > .wpb_wrapper:hover .wpb_single_image > .wpb_wrapper > div {
+	background-position: center bottom !important;
+	opacity: 0.6;
+}
+.wpb-layout-element-button .meetup-vc-block {
+	background-image: url(vc-icon.png);
+}
+.meetup-vc-block .wpb_element_wrapper,
+.vc_element-icon.meetup-vc-block {
+	background-image: url(vc-icon.png);
+}
+.meetup-vc-block.wpb_content_element > .wpb_element_wrapper {
+    background-image: url(vc-icon.png);
+}
+.wpb_my_bartag[data-element_type=meetup-vc-block] {
+    background-image: url(vc-icon.png);
+}
+.ebor-icons-wrapper {
+	display: none;
+}
+.ebor-icons i {
+	font-size: 36px;
+	width: 28px !important;
+	height: 32px !important;
+	margin: 0 8px 8px 0;
+	cursor: pointer;
+}
+.ebor-icons i.active {
+	color: red;
+}
+#ebor-icon-toggle {
+	margin-bottom: 20px;
+}

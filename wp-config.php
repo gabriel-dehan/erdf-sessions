@@ -13,7 +13,7 @@
  *
  * @package WordPress
  */
- 
+
 // Include local configuration
 if (file_exists(dirname(__FILE__) . '/local-config.php')) {
 	include(dirname(__FILE__) . '/local-config.php');
@@ -109,8 +109,12 @@ if (!defined('WP_CONTENT_URL')) {
  * in their development environments.
  */
 if (!defined('WP_DEBUG')) {
-	define('WP_DEBUG', false);
+	define('WP_DEBUG', true);
 }
+
+//define('SAVEQUERIES', true);
+
+//define('FS_METHOD','direct');
 
 /* That's all, stop editing! Happy blogging. */
 

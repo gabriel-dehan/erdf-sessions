@@ -1,0 +1,234 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/comments.php:23
+msgid "% Comments"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/comments.php:23
+msgid "0 Comments"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/comments.php:23
+msgid "1 Comment"
+msgstr ""
+
+#. Text in echo
+#: Meetup-WordPress-Theme-master/404.php:8
+msgid "404"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/class-tgm-plugin-activation.php:1
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:1
+msgid "Back To Top"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Blog Sidebar"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/comments.php:1
+msgid "Cancel"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/class-tgm-plugin-activation.php:1
+msgid "Dismiss this notice"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/comments.php:1
+msgid "Email *"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/comments.php:1
+msgid "Enter your comment here..."
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Footer Column 1"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Footer Column 2"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Footer Column 3"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Footer Column 4"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Footer Navigation"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Header Sidebar"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "If this & column 1 & column 2 & column 3 are set, your footer will be 4 columns."
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "If this & column 1 & column 2 are set, your footer will be 3 columns."
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "If this & column 1 are set, your footer will be 2 columns."
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "If this is set, your footer will be 1 column"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/class-tgm-plugin-activation.php:1
+msgid "Install Plugins"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/class-tgm-plugin-activation.php:1
+msgid "Install Required Plugins"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/class-tgm-plugin-activation.php:1
+msgid "Installing Plugin: %s"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/comments.php:1
+msgid "Leave a reply"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/comments.php:1
+msgid "Logged in as <a href=\"%1$s\">%2$s</a> <a href=\"%3$s\">Log out?</a>"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/comments.php:1
+msgid "Name *"
+msgstr ""
+
+#. Text in echo
+#: Meetup-WordPress-Theme-master/404.php:8
+msgid "Not Found"
+msgstr ""
+
+#. Text in echo
+#: Meetup-WordPress-Theme-master/404.php:9
+msgid "Oh dear, this is not the way to the Meetup..."
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Page Sidebar"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/class-tgm-plugin-activation.php:1
+msgid "Plugin activated successfully."
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/class-tgm-plugin-activation.php:1
+msgid "Return to Required Plugins Installer"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/class-tgm-plugin-activation.php:1
+msgid "Return to the dashboard"
+msgstr ""
+
+#. Text in echo
+#: Meetup-WordPress-Theme-master/searchform.php:3
+msgid "Search"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Sidebar Navigation"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/class-tgm-plugin-activation.php:1
+msgid "Something went wrong."
+msgstr ""
+
+#. Text in echo
+#: Meetup-WordPress-Theme-master/loop/content-none.php:1
+msgid "Sorry, no results were found, search again?"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Standard Navigation"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/loop/content-post.php:1
+msgid "Sticky: "
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/single.php:35
+msgid "Tags: "
+msgstr ""
+
+#. Text in echo
+#: Meetup-WordPress-Theme-master/404.php:10
+msgid "Take Me Home"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/class-tgm-plugin-activation.php:1
+msgid "The following plugin was activated successfully:"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/comments.php:1
+msgid "Website"
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Widgets to be displayed in the blog sidebar."
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
+msgid "Widgets to be displayed in the page sidebar."
+msgstr ""
+
+#. Text in function
+#: Meetup-WordPress-Theme-master/admin/theme_functions.php:370
+msgid "Your comment is awaiting moderation."
+msgstr ""
