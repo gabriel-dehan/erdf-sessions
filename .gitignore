@@ -24,16 +24,16 @@ Thumbs.db
 # Vagrant
 .vagrant
 
-# WordPress + popular plugin generated — adapted from:
-# https://github.com/github/gitignore/blob/master/WordPress.gitignore
+*.log
+.htaccess
 sitemap.xml
 sitemap.xml.gz
-content/advanced-cache.php
-content/backup-db/
-content/backups/
-content/blogs.dir/
-content/cache/
-content/uploads/
-content/upgrade/
-content/wp-cache-config.php
-
+wp-config.php
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/wp-cache-config.php
