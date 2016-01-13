@@ -36,18 +36,34 @@ class ES_DB_UsersEvents {
   public function get_users($event, $filter_status = false) {
     global $wpdb;
 
-    $query = "SELECT * FROM " . $this->table_name . " ue " .
-                  "JOIN wp_users u ON u.id = ue.user_id " .
+    $close_query = ";";
 
-                  "WHERE ue.event_id = " . $event->ID;
+    $query = "SELECT * FROM " . $this->table_name . " ue " .
+             "JOIN wp_users u ON u.id = ue.user_id " .
+             "WHERE ue.event_id = " . $event->ID;
 
     if ($filter_status) {
       $query .= " AND ue.status = '" . $filter_status . "'";
     }
 
-    $close_query = ";";
+    $users_events = $wpdb->get_results($query . $close_query);
 
-    return $wpdb->get_results($query . $close_query);
+    $users = array_map(function($user) {
+        global $wpdb;
+        // We want to return users not users_events so we change the ID to the user_id
+        $user->ID = $user->id = $user->user_id;
+
+        $meta = $wpdb->get_results('SELECT * FROM wp_usermeta WHERE user_id = ' . $user->id . ';');
+
+        // Populate with meta data
+        foreach($meta as $info) {
+            $user->{$info->meta_key} = $info->meta_value;
+        }
+
+        return $user;
+    }, $users_events);
+
+    return $users;
   }
 
   public function get_users_grouped_by_status($event) {
@@ -117,6 +133,16 @@ class ES_DB_UsersEvents {
     $wpdb->delete( $this->table_name, array( 'id' => $id ), array( '%d' ) );
 	}
 
+
+    public function update_user_status($user_id, $status) {
+        global $wpdb;
+
+        return $wpdb->update('wp_users_events', array('status' => $status),
+                    array( 'user_id' => $user_id ),
+                    array('%s'),
+                    array( '%d' ));
+
+    }
 	/**
 	 * Create the table
 	 */
