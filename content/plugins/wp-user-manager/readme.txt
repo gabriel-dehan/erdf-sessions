@@ -7,7 +7,7 @@ Requires at least: 4.1
 Tested up to: 4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.2.5
+Stable tag: 1.2.6
 
 WP User Manager is the best solution to manage your users and create front-end profiles for your members.
 
@@ -87,6 +87,14 @@ Here [http://docs.wpusermanager.com/](http://docs.wpusermanager.com/)
 View all the screenshots here [https://wpusermanager.com/screenshots/](https://wpusermanager.com/screenshots/)
 
 == Changelog ==
+
+= 1.2.6 =
+
+- **Added**: tool to manually fix broken fields from previous bug.
+- **Added**: pt_BR translation.
+- fixed: slashes - escaping in fields names and descriptions.
+- fixed: slashes - escaping in field groups names and descriptions.
+- fixed: password reset shortcode expects parameters.
 
 = 1.2.5 =
 

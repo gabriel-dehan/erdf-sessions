@@ -26,8 +26,9 @@ $day      = tribe_events_get_current_month_day();
 $event_id = "{$post->ID}-{$day['daynum']}";
 $link     = tribe_get_event_link( $post );
 $title    = get_the_title( $post );
+$users    = es_event_find_users($post);
+$users_count = count($users);
 
-es_event_find_users($post);
 /**
  * How to Use the Javascript Templating System in this View
  * ========================================================
@@ -194,5 +195,12 @@ es_event_find_users($post);
 ?>
 
 <div id="tribe-events-event-<?php echo esc_attr( $event_id ); ?>" class="<?php tribe_events_event_classes() ?>" data-tribejson='<?php echo esc_attr( tribe_events_template_data( $post ) ); ?>'>
-	<h3 class="tribe-events-month-event-title"><a href="<?php echo esc_url( $link ) ?>" class="url"><?php echo $title ?></a></h3>
+	<h3 class="tribe-events-month-event-title">
+      <a href="<?php echo esc_url( $link ) ?>" class="url">
+          <?php echo $title ?>
+      </a>
+      <span class="users-count">
+          <?php echo $users_count ?>/5
+      </span>
+  </h3>
 </div><!-- #tribe-events-event-# -->

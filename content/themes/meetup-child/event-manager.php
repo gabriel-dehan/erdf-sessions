@@ -4,10 +4,15 @@ class EventManager {
 
     public function __construct($event) {
         $this->event = $event;
+        $this->relations = new ES_DB_UsersEvents;
     }
 
     public function find_users() {
-        hd($this->event);
+        return $this->relations->get_users($this->event);
+    }
+
+    public function find_onboard_users() {
+        return $this->relations->get_users($this->event, "onboard");
     }
 }
 

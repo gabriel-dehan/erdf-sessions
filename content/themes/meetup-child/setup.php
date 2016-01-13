@@ -11,5 +11,5 @@ function es_setup_create_user_events() {
   $users_events->create_table();
 }
 
-add_action( 'after_setup_theme', 'es_setup_customize_fields' );
-add_action( 'after_setup_theme', 'es_setup_create_user_events' );
+add_action( 'after_switch_theme', 'es_setup_customize_fields' );
+add_action( 'after_switch_theme', 'es_setup_create_user_events' );

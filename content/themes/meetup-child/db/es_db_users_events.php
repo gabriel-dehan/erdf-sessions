@@ -33,6 +33,44 @@ class ES_DB_UsersEvents {
 		);
 	}
 
+  public function get_users($event, $filter_status = false) {
+    global $wpdb;
+
+    $query = "SELECT * FROM " . $this->table_name . " ue " .
+                  "JOIN wp_users u ON u.id = ue.user_id " .
+
+                  "WHERE ue.event_id = " . $event->ID;
+
+    if ($filter_status) {
+      $query .= " AND ue.status = '" . $filter_status . "'";
+    }
+
+    $close_query = ";";
+
+    return $wpdb->get_results($query . $close_query);
+  }
+
+  public function get_users_grouped_by_status($event) {
+    $users_with_status = $this->get_users($event);
+
+    $users = array(
+      "pending"  => [],
+      "onlist"   => [],
+      "onboard"  => [],
+      "rejected" => []
+    );
+
+    foreach($users_with_status as $user) {
+      array_push( $users[$user->status], $user );
+    }
+    return $users;
+
+  }
+
+  public function user_status($user, $event) {
+    return $this->fetch_subscription($user, $event)[0]->status;
+  }
+
   public function user_subscribed($user, $event) {
     return count($this->fetch_subscription($user, $event));
   }
@@ -93,6 +131,7 @@ class ES_DB_UsersEvents {
           time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
           user_id mediumint(9) NOT NULL,
           event_id mediumint(9) NOT NULL,
+          status varchar(50) DEFAULT 'pending' NOT NULL,
           UNIQUE KEY id (id),
           UNIQUE KEY id_user_event (user_id,event_id)
           ) $charset_collate;";

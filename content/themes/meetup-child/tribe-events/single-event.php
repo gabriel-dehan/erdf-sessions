@@ -14,10 +14,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+$event = get_post();
+$user  = wp_get_current_user();
+
+$users_events = new ES_DB_UsersEvents;
+$users        = $users_events->get_users($event, "onboard");
+$users_count  = count($users);
+
 if (isset($_POST['subscribe'])) {
-  $user = wp_get_current_user();
   $event = get_post($_POST['event_id']);
-  $users_events = new ES_DB_UsersEvents;
 
   $is_subscribed = $users_events->user_subscribed($user, $event);
   if (!$is_subscribed) {
@@ -82,11 +87,23 @@ if (isset($_POST['subscribe'])) {
 			<?php tribe_get_template_part( 'modules/meta' ); ?>
 			<?php do_action( 'tribe_events_single_event_after_the_meta' ) ?>
 		</div> <!-- #post-x -->
+
+    <h3>Users</h3>
+    <ul>
+    <?php foreach ($users as $user) { ?>
+      <li><?php echo $user->first_name . " " . $user->last_name ?></li>
+    <?php } ?>
+    </ul>
+
+    <?php if ( $users_events->user_subscribed($user, $event) ) { ?>
+        Votre statut pour cette session: <?php echo es_status_to_sentence($users_events->user_status($user, $event)); ?>
+    <?php } else { ?>
         <form method="POST" action="<?php the_permalink(); ?>">
-          <input type="hidden" name="subscribe">
-          <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
-          <button>S'inscrire</button>
+            <input type="hidden" name="subscribe">
+            <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
+            <button>S'inscrire</button>
         </form>
+    <?php } ?>
 
 		<?php if ( get_post_type() == Tribe__Events__Main::POSTTYPE && tribe_get_option( 'showComments', false ) ) comments_template() ?>
 	<?php endwhile; ?>
