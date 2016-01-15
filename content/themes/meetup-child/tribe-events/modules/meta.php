@@ -18,7 +18,7 @@ $set_venue_apart = apply_filters( 'tribe_events_single_event_the_meta_group_venu
 ?>
 
 <?php if ( $not_skeleton ) : ?>
-	<div class="tribe-events-single-section tribe-events-event-meta primary tribe-clearfix">
+	<div class="tribe-events-single-section primary tribe-clearfix">
 <?php endif; ?>
 
 <?php

@@ -1,0 +1,11 @@
+body .primary-overlay:before {
+    color: white;
+    content: '';
+    height: 100%;
+    opacity: 0.4;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    z-index: 1;
+    background-color: #C3D3AB !important;
+}

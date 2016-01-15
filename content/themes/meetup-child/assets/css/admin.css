@@ -1,0 +1,103 @@
+#poststuff h2.session-prog {
+    font-size: 23px;
+    font-weight: 400;
+    margin: 20px 0;
+    padding: 9px 15px 4px 0;
+    line-height: 29px;
+}
+
+.participants .title {
+    text-decoration: underline;
+}
+
+.participants-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 40px;
+    background-color: transparent;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border-bottom: 1px solid #B1B1B1;
+    font-size: 1.2em;
+}
+
+.no-participant {
+    margin-bottom: 40px;
+}
+
+.participants-table > tbody > tr > td,
+.participants-table > tbody > tr > th,
+.participants-table > tfoot > tr > td,
+.participants-table > tfoot > tr > th,
+.participants-table > thead > tr > td,
+.participants-table > thead > tr > th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+    text-align: left;
+    font-size: 1em;
+}
+
+.participants-table > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+    font-size: 0.9em;
+}
+
+.participants-table .participant-name {
+    width: 18%;
+}
+.participants-table .participant-email {
+    width: 30%;
+}
+.participants-table .participant-actions {
+    width: 52%;
+    text-align: right;
+}
+
+
+.participants-table .actions {
+    text-align: right;
+    padding-top: 0;
+}
+
+.participants-table .actions form {
+    display: inline;
+}
+.participants-table .actions button {
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 35px;
+    cursor: pointer;
+}
+.participants-table .actions button:focus {
+        outline: none;
+}
+
+.participants-table .actions button .dashicons {
+    display: inline;
+    font-size: 30px;
+}
+
+.participants-table .actions button .dashicons::before {
+    font-size: 1.4em;
+    cursor: pointer;
+}
+
+.participants-table .actions .action-onboard {
+    color: #71AF66;
+}
+.participants-table .actions .action-onlist {
+    color: #4197C2;
+    padding-left: 10px;
+}
+.participants-table .actions .action-onlist .dashicons::before {
+    font-size: 1.2em;
+    line-height: 1.6em;
+}
+
+.participants-table .actions .action-rejected {
+    color: #CA1919;
+}

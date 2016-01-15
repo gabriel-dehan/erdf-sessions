@@ -1,10 +1,12 @@
 <?php
 
 add_action( 'wpum_after_register_form_template', function() {
-  wp_enqueue_script('login-handler', get_stylesheet_directory_uri() . '/login-handler.js', array('jquery'));
+  wp_enqueue_script('login-handler', get_stylesheet_directory_uri() . '/assets/js/register-handler.js', array('jquery'));
 });
 
+
 add_action( 'wpum/form/register/success', 'es_after_register', 10, 2 );
+
 function es_after_register($user_id, $values) {
     if( array_key_exists( 'responsable_email' , $values['register'] ) )
         update_user_meta( $user_id, 'responsable_email', $values['register']['responsable_email'] );

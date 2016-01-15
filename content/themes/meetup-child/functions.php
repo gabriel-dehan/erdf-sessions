@@ -1,6 +1,8 @@
 <?php
 require('kint/Kint.class.php');
 require('utils.php');
+require('styles.php');
+require('scripts.php');
 
 require_once('db/es_db_users_events.php');
 
@@ -13,6 +15,7 @@ function es_event_find_users($event) {
   $event_manager = new EventManager($event);
   return $event_manager->find_onboard_users();
 }
+
 /*
  * Possible solution for Single Event page 404 errors where the WP_Query has an attachment set
  * IMPORTANT: Flush permalinks after pasting this code: http://tri.be/support/documentation/troubleshooting-404-errors/

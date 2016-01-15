@@ -30,7 +30,7 @@ if( $thumbnail ) :
 		<div class="container">
 			  <div class="row">
 
-				    <div class="col-md-8 col-sm-12">
+				    <div class="col-md-12 col-sm-12">
 					      <div class="article-body">
 						        <?php
 							      if(!( $thumbnail ))
