@@ -1,5 +1,89 @@
 jQuery( document ).ready( function( $ ) {
 
+    jQuery( "#tc-general-settings, #tc_ticket_type_form, #tc_discount_code_form " ).validate( {
+        rules: {
+           /* field: {
+                required: true,
+                number: true
+            },*/
+            field: {
+                number: true
+            },
+            field: {
+               required: true
+            }
+        }
+    } );
+
+    //jQuery( '#tc-general-settings' ).validate();
+
+    $( '.has_conditional' ).live( 'change', function( ) {
+        tc_conditionals_init( );
+    } );
+
+    function tc_conditionals_init( ) {
+        $( '.tc_conditional' ).each( function( i, obj ) {
+            tc_conditional( $( this ) );
+        } );
+    }
+
+    function tc_conditional( obj ) {
+
+        var field_name = $( obj ).attr( 'data-condition-field_name' );
+        if ( !$( '.' + field_name ).hasClass( 'has_conditional' ) ) {
+            $( '.' + field_name ).addClass( 'has_conditional' );
+        }
+
+        var field_type = $( obj ).attr( 'data-condition-field_type' );
+        var value = $( obj ).attr( 'data-condition-value' );
+        var action = $( obj ).attr( 'data-condition-action' );
+        if ( field_type == 'radio' ) {
+            var selected_value = $( '.' + field_name + ':checked' ).val( );
+            //alert(selected_value);
+        }
+
+        if ( field_type == 'text' || field_type == 'textarea' || field_type == 'select' ) {
+            var selected_value = $( '.' + field_name ).val( );
+        }
+
+        if ( value == selected_value ) {
+            if ( action == 'hide' ) {
+                $( obj ).hide();
+            }
+            if ( action == 'show' ) {
+                $( obj ).show( 200 );
+            }
+        } else {
+            if ( action == 'hide' ) {
+                $( obj ).show( 200 );
+            }
+            if ( action == 'show' ) {
+                $( obj ).hide();
+            }
+        }
+
+        fix_chosen();
+    }
+
+    tc_conditionals_init( );
+
+    $( '.tc_tooltip' ).tooltip( {
+        content: function() {
+            return $( this ).prop( 'title' );
+        },
+        show: null,
+        close: function( event, ui ) {
+            ui.tooltip.hover(
+                function() {
+                    $( this ).stop( true ).fadeTo( 100, 1 );
+                },
+                function() {
+                    $( this ).fadeOut( "100", function() {
+                        $( this ).remove();
+                    } )
+                } );
+        }
+    } );
 
     /* Toggle Controls */
     //tickera_page_tc_ticket_types
@@ -188,16 +272,16 @@ jQuery( document ).ready( function( $ ) {
         update_li();
         tc_fix_template_elements_sizes();
     }
-    
-    
-    jQuery('.close-this').click(function(event){
+
+
+    jQuery( '.close-this' ).click( function( event ) {
         event.preventDefault();
-        jQuery(this).closest('.ui-state-default').appendTo('#ticket_elements');
+        jQuery( this ).closest( '.ui-state-default' ).appendTo( '#ticket_elements' );
         update_li();
         tc_fix_template_elements_sizes();
-    });
-    
-    
+    } );
+
+
 
     function fix_chosen() {
         $( ".tc_wrap select" ).css( 'width', '25em' );
@@ -301,12 +385,12 @@ jQuery( document ).ready( function( $ ) {
 
                 $( this ).remove();
                 elem.show();
-               
+
             } );
         } );
     };
-    
-     $( ".tc_temp_value" ).live( 'keyup', function( e ) {
+
+    $( ".tc_temp_value" ).live( 'keyup', function( e ) {
         if ( e.keyCode == 13 ) {
             $( this ).blur( );
         }

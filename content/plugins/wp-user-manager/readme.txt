@@ -7,7 +7,7 @@ Requires at least: 4.1
 Tested up to: 4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.2.6
+Stable tag: 1.2.7
 
 WP User Manager is the best solution to manage your users and create front-end profiles for your members.
 
@@ -49,6 +49,10 @@ Read more about our features on [wpusermanager.com](https://wpusermanager.com/fe
 
 - [Google reCAPTCHA](https://wpusermanager.com/addons/recaptcha): Stop spam registrations on your website for free.
 
+= Paid Extensions =
+
+- [Custom Fields](https://wpusermanager.com/addons/custom-fields/): Add custom fields to user profiles and registration form.
+
 [View all extensions](https://wpusermanager.com/addons)
 
 = Languages =
@@ -59,6 +63,7 @@ Read more about our features on [wpusermanager.com](https://wpusermanager.com/fe
 - German (thanks to Tobias)
 - Simplified Chinese ( thanks to Changmeng )
 - Dutch ( thanks to Patrick )
+- Portuguese ( thanks to Fernando )
 
 = Support =
 
@@ -87,6 +92,10 @@ Here [http://docs.wpusermanager.com/](http://docs.wpusermanager.com/)
 View all the screenshots here [https://wpusermanager.com/screenshots/](https://wpusermanager.com/screenshots/)
 
 == Changelog ==
+
+= 1.2.7 =
+
+- fixed: tool to fix missing fields from previous bug, did not actually fix fields.
 
 = 1.2.6 =
 

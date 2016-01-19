@@ -20,6 +20,10 @@ if ( !class_exists( 'TC_API_Key' ) ) {
 			$api_keys	 = new TC_API_Keys();
 			$fields		 = $api_keys->get_api_keys_fields();
 
+			if ( !isset( $this->details ) ) {
+				$this->details = new stdClass();
+			}
+
 			foreach ( $fields as $field ) {
 				if ( !isset( $this->details->{$field[ 'field_name' ]} ) ) {
 					$this->details->{$field[ 'field_name' ]} = get_post_meta( $this->id, $field[ 'field_name' ], true );

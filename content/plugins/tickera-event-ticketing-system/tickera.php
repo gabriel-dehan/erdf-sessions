@@ -5,7 +5,7 @@
   Description: Simple event ticketing system
   Author: Tickera.com
   Author URI: http://tickera.com/
-  Version: 3.2.1.6
+  Version: 3.2.1.9
   TextDomain: tc
   Domain Path: /languages/
 
@@ -19,7 +19,7 @@ if ( !class_exists( 'TC' ) ) {
 
 	class TC {
 
-		var $version			 = '3.2.1.6';
+		var $version			 = '3.2.1.9';
 		var $title			 = 'Tickera';
 		var $name			 = 'tc';
 		var $dir_name		 = 'tickera-event-ticketing-system';
@@ -33,6 +33,7 @@ if ( !class_exists( 'TC' ) ) {
 
 			$this->init_vars();
 
+			require_once($this->plugin_dir . 'includes/classes/class.fields.php');
 
 			require_once($this->plugin_dir . 'includes/classes/class.form_fields_api.php');
 
@@ -364,13 +365,6 @@ if ( !class_exists( 'TC' ) ) {
 				$tc_order_date	 = $order->details->tc_order_date;
 				$alt_paid_date	 = $order->details->_tc_paid_date;
 
-				/* echo 'ORDER KEY:'.$order_key.'<br />';
-				  echo 'ORDER MODIFIED:'.$order_modified.'<br />';
-				  echo 'ORDER DATE:'.$order_date.'<br />';
-				  echo 'TC ORDER DATE:'.$tc_order_date.'<br />';
-
-				  exit; */
-
 				if ( $order_key == $order_date || $order_key == $order_modified || $order_key == $tc_order_date || $alt_paid_date == $order_key ) {
 					$templates = new TC_Ticket_Templates();
 					$templates->generate_preview( (int) $_GET[ 'download_ticket' ], true );
@@ -558,6 +552,32 @@ if ( !class_exists( 'TC' ) ) {
 					update_post_meta( $post_id, 'tc_ticket_description_element_bottom_padding', '2' );
 					update_post_meta( $post_id, 'tc_event_location_element_bottom_padding', '0' );
 					update_post_meta( $post_id, 'tc_ticket_owner_name_element_font_style', '' );
+				}
+			}
+
+			/* Add random default API Key */
+
+			$api_key_count = (int) $wpdb->get_var( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = 'tc_api_keys' AND post_status = 'publish'" );
+
+			if ( $api_key_count == 0 ) {
+				$post = array(
+					'post_content'	 => '',
+					'post_status'	 => 'publish',
+					'post_title'	 => __( 'Default', 'tc' ),
+					'post_type'		 => 'tc_api_keys',
+				);
+
+				$post	 = apply_filters( 'tc_api_key_default_post', $post );
+				$post_id = wp_insert_post( $post );
+
+				/* Add post metas for the API Key */
+				$api_keys = new TC_API_Keys();
+
+				if ( $post_id != 0 ) {
+					update_post_meta( $post_id, 'event_name', 'all' );
+					update_post_meta( $post_id, 'api_key_name', 'Default - All Events' );
+					update_post_meta( $post_id, 'api_key', $api_keys->get_rand_api_key() );
+					update_post_meta( $post_id, 'api_username', '' );
 				}
 			}
 		}
@@ -2916,7 +2936,11 @@ if ( !class_exists( 'TC' ) ) {
 			wp_enqueue_media();
 			wp_enqueue_script( 'media-upload' );
 			wp_enqueue_style( 'wp-color-picker' );
-			wp_enqueue_script( $this->name . '-admin', $this->plugin_url . 'js/admin.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-accordion', 'wp-color-picker' ), false, false );
+
+			wp_register_script( 'jquery-validation-plugin', 'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js' );
+			wp_register_script( 'jquery-validation-additional-methods-plugin', 'http://jqueryvalidation.org/files/dist/additional-methods.min.js' );
+
+			wp_enqueue_script( $this->name . '-admin', $this->plugin_url . 'js/admin.js', array( 'jquery', 'jquery-validation-plugin', 'jquery-validation-additional-methods-plugin', 'jquery-ui-tooltip', 'jquery-ui-core', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-accordion', 'wp-color-picker' ), false, false );
 
 			wp_localize_script( $this->name . '-admin', 'tc_vars', array(
 				'ajaxUrl'						 => admin_url( 'admin-ajax.php', (is_ssl() ? 'https' : 'http' ) ),
@@ -2926,7 +2950,12 @@ if ( !class_exists( 'TC' ) ) {
 			) );
 
 			wp_enqueue_script( $this->name . '-chosen', $this->plugin_url . 'js/chosen.jquery.min.js', array( $this->name . '-admin' ), false, false );
+
+
+
 			wp_enqueue_style( $this->name . '-admin', $this->plugin_url . 'css/admin.css', array(), $this->version );
+
+			wp_enqueue_style( $this->name . '-admin-jquery-ui', '//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css', array(), $this->version );
 
 			wp_enqueue_style( $this->name . '-chosen', $this->plugin_url . 'css/chosen.min.css', array(), $this->version );
 			wp_enqueue_script( $this->name . '-simple-dtpicker', $this->plugin_url . 'js/jquery.simple-dtpicker.js', array( 'jquery' ), $this->version );

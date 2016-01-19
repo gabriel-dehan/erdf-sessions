@@ -2,9 +2,11 @@
 global $tc_general_settings, $wp_rewrite;
 
 if ( isset( $_POST[ 'save_tc_settings' ] ) ) {
+	
 	if ( check_admin_referer( 'save_settings' ) ) {
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'save_settings_cap' ) ) {
 			update_option( 'tc_general_setting', $_POST[ 'tc_general_setting' ] );
+	
 			do_action( 'tc_save_tc_general_settings' );
 			tc_save_page_ids();
 
@@ -37,6 +39,8 @@ $tc_general_settings = get_option( 'tc_general_setting', false );
 			$sections			 = $general_settings->get_settings_general_sections();
 			?>
 
+			<!--NEW FIELDS-->
+
 			<?php foreach ( $sections as $section ) {
 				?>
 				<div id="<?php echo $section[ 'name' ]; ?>" class="postbox">
@@ -46,27 +50,18 @@ $tc_general_settings = get_option( 'tc_general_setting', false );
 						<table class="form-table">
 							<?php
 							$fields = $general_settings->get_settings_general_fields();
+
 							foreach ( $fields as $field ) {
 								if ( isset( $field[ 'section' ] ) && $field[ 'section' ] == $section[ 'name' ] ) {
-									?>    
-									<tr valign="top">
-										<th scope="row"><label for="<?php echo $field[ 'field_name' ]; ?>"><?php echo $field[ 'field_title' ]; ?></label></th>
+									?>
+									<tr valign="top" id="<?php echo esc_attr( $field[ 'field_name' ] . '_holder' ); ?>" <?php TC_Fields::conditionals( $field ); ?>>
+										<th scope="row"><label for="<?php echo $field[ 'field_name' ]; ?>"><?php echo $field[ 'field_title' ]; ?><?php (isset( $field[ 'tooltip' ] ) ? tc_tooltip( $field[ 'tooltip' ] ) : ''); ?></label></th>
 										<td>
-											<?php do_action( 'tc_before_settings_general_field_type_check' ); ?>
+											<?php do_action( 'tc_before_settings_general_field_type_check', $field ); ?>
 											<?php
-											if ( $field[ 'field_type' ] == 'function' ) {
-												if ( isset( $field[ 'default_value' ] ) ) {
-													eval( $field[ 'function' ] . '("' . $field[ 'field_name' ] . '", "' . $field[ 'default_value' ] . '");' );
-												} else {
-													eval( $field[ 'function' ] . '("' . $field[ 'field_name' ] . '");' );
-												}
-												?>
-												<span class="description"><?php echo $field[ 'field_description' ]; ?></span>
-											<?php } else { ?>
-												<input type="text" name="tc_general_setting[<?php echo esc_attr( $field[ 'field_name' ] ); ?>]" value="<?php echo stripslashes( isset( $tc_general_settings[ $field[ 'field_name' ] ] ) ? $tc_general_settings[ $field[ 'field_name' ] ] : (isset( $field[ 'default_value' ] ) ? $field[ 'default_value' ] : '')  ) ?>">
-												<span class="description"><?php echo $field[ 'field_description' ]; ?></span>
-											<?php } ?>
-											<?php do_action( 'tc_after_settings_general_field_type_check' ); ?>
+											TC_Fields::render_field( $field, 'tc_general_setting' );
+											?>
+											<?php do_action( 'tc_after_settings_general_field_type_check', $field ); ?>
 										</td>
 									</tr>
 									<?php
@@ -77,6 +72,51 @@ $tc_general_settings = get_option( 'tc_general_setting', false );
 					</div>
 				</div>
 			<?php } ?>
+
+			<!--OLD FIELDS-->
+			<?php
+			$sections = array();
+			/* foreach ( $sections as $section ) {
+			  ?>
+			  <div id="<?php echo $section[ 'name' ]; ?>" class="postbox">
+			  <h3 class='hndle'><span><?php echo esc_attr( $section[ 'title' ] ); ?></span></h3>
+			  <div class="inside">
+			  <span class="description"><?php echo $section[ 'description' ]; ?></span>
+			  <table class="form-table">
+			  <?php
+			  $fields = $general_settings->get_settings_general_fields();
+			  foreach ( $fields as $field ) {
+			  if ( isset( $field[ 'section' ] ) && $field[ 'section' ] == $section[ 'name' ] ) {
+			  ?>
+			  <tr valign="top">
+			  <th scope="row"><label for="<?php echo $field[ 'field_name' ]; ?>"><?php echo $field[ 'field_title' ]; ?></label></th>
+			  <td>
+			  <?php do_action( 'tc_before_settings_general_field_type_check' ); ?>
+			  <?php
+			  if ( $field[ 'field_type' ] == 'function' ) {
+			  if ( isset( $field[ 'default_value' ] ) ) {
+			  eval( $field[ 'function' ] . '("' . $field[ 'field_name' ] . '", "' . $field[ 'default_value' ] . '");' );
+			  } else {
+			  eval( $field[ 'function' ] . '("' . $field[ 'field_name' ] . '");' );
+			  }
+			  ?>
+			  <span class="description"><?php echo $field[ 'field_description' ]; ?></span>
+			  <?php } else { ?>
+			  <input type="text" name="tc_general_setting[<?php echo esc_attr( $field[ 'field_name' ] ); ?>]" value="<?php echo stripslashes( isset( $tc_general_settings[ $field[ 'field_name' ] ] ) ? $tc_general_settings[ $field[ 'field_name' ] ] : (isset( $field[ 'default_value' ] ) ? $field[ 'default_value' ] : '')  ) ?>">
+			  <span class="description"><?php echo $field[ 'field_description' ]; ?></span>
+			  <?php } ?>
+			  <?php do_action( 'tc_after_settings_general_field_type_check' ); ?>
+			  </td>
+			  </tr>
+			  <?php
+			  }
+			  }
+			  ?>
+			  </table>
+			  </div>
+			  </div>
+			  <?php } */
+			?>
 			<?php submit_button( __( 'Save Settings' ), 'primary', 'save_tc_settings' ); ?>
         </form>
     </div>

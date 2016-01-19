@@ -36,35 +36,25 @@ $tc_email_settings = get_option( 'tc_email_setting', false );
 
 			<?php foreach ( $sections as $section ) {
 				?>
-				<div id="<?php echo esc_attr( $section[ 'name' ] ); ?>" class="postbox">
-					<h3 class='hndle'><span><?php echo $section[ 'title' ]; ?></span></h3>
+				<div id="<?php echo $section[ 'name' ]; ?>" class="postbox">
+					<h3 class='hndle'><span><?php echo esc_attr( $section[ 'title' ] ); ?></span></h3>
 					<div class="inside">
 						<span class="description"><?php echo $section[ 'description' ]; ?></span>
 						<table class="form-table">
 							<?php
 							$fields = $email_settings->get_settings_email_fields();
+
 							foreach ( $fields as $field ) {
-								if ( $field[ 'section' ] == $section[ 'name' ] ) {
-									?>    
-									<tr valign="top">
-										<th scope="row"><label for="<?php echo esc_attr( $field[ 'field_name' ] ); ?>"><?php echo $field[ 'field_title' ]; ?></label></th>
+								if ( isset( $field[ 'section' ] ) && $field[ 'section' ] == $section[ 'name' ] ) {
+									?>
+									<tr valign="top" id="<?php echo esc_attr( $field[ 'field_name' ] . '_holder' ); ?>" <?php TC_Fields::conditionals( $field ); ?>>
+										<th scope="row"><label for="<?php echo $field[ 'field_name' ]; ?>"><?php echo $field[ 'field_title' ]; ?><?php (isset( $field[ 'tooltip' ] ) ? tc_tooltip( $field[ 'tooltip' ] ) : ''); ?></label></th>
 										<td>
-											<?php do_action( 'tc_before_settings_email_field_type_check' ); ?>
+											<?php do_action( 'tc_before_settings_general_field_type_check' ); ?>
 											<?php
-											if ( $field[ 'field_type' ] == 'function' ) {
-												if ( isset( $field[ 'default_value' ] ) ) {
-													eval( $field[ 'function' ] . '("' . $field[ 'field_name' ] . '", "' . $field[ 'default_value' ] . '");' );
-												} else {
-													eval( $field[ 'function' ] . '("' . $field[ 'field_name' ] . '");' );
-												}
-												?>
-												<span class="description"><?php echo $field[ 'field_description' ]; ?></span>
-											<?php } else {
-												?>
-												<input type="text" name="tc_email_setting[<?php echo esc_attr( $field[ 'field_name' ] ); ?>]" value="<?php echo stripslashes(isset( $tc_email_settings[ $field[ 'field_name' ] ] ) ? esc_attr( $tc_email_settings[ $field[ 'field_name' ] ] ) : (isset( $field[ 'default_value' ] ) ? esc_attr( $field[ 'default_value' ] ) : '') ) ?>">
-												<span class="description"><?php echo $field[ 'field_description' ]; ?></span>
-											<?php } ?>
-											<?php do_action( 'tc_after_settings_email_field_type_check' ); ?>
+											TC_Fields::render_field( $field, 'tc_email_setting' );
+											?>
+											<?php do_action( 'tc_after_settings_general_field_type_check' ); ?>
 										</td>
 									</tr>
 									<?php
@@ -75,6 +65,7 @@ $tc_email_settings = get_option( 'tc_email_setting', false );
 					</div>
 				</div>
 			<?php } ?>
+
 			<?php submit_button( __( 'Save Settings' ), 'primary', 'save_tc_settings' ); ?>
         </form>
     </div>

@@ -33,9 +33,9 @@ if ( !class_exists( 'TC_Delete_Pending_Orders' ) ) {
 					'field_name'		 => 'delete_pending_orders',
 					'field_title'		 => __( 'Delete Pending Orders', 'tc' ),
 					'field_type'		 => 'function',
-					'function'			 => 'tc_radio_checkbox',
+					'function'			 => 'tc_yes_no',
 					'default_value'		 => 'no',
-					'field_description'	 => __( 'Delete pending orders (which are not paid for 24 hours or more). Note: all pending orders will be deleted made via all payment gateways except Free Orders and Offline Payments', 'tc' ),
+					'tooltip'	 => __( 'Delete pending orders (which are not paid for 24 hours or more). Note: all pending orders will be deleted made via all payment gateways except Free Orders and Offline Payments', 'tc' ),
 					'section'			 => 'miscellaneous_settings'
 				),
 			);

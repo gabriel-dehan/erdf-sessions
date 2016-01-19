@@ -43,6 +43,7 @@ if ( !class_exists( 'TC_Better_Events' ) ) {
 
 			add_action( 'add_meta_boxes', array( &$this, 'add_events_metaboxes' ) );
 			add_action( 'save_post', array( $this, 'save_metabox_values' ) );
+			add_action( 'delete_post', array( $this, 'delete_event_api_keys' ) );
 
 			add_filter( 'the_content', array( $this, 'modify_the_content' ) );
 		}
@@ -132,6 +133,22 @@ if ( !class_exists( 'TC_Better_Events' ) ) {
 			return $content;
 		}
 
+		function delete_event_api_keys( $post_id ) {
+			$api_key_post = array(
+				'post_content'	 => '',
+				'post_status'	 => 'publish',
+				'post_type'		 => 'tc_api_keys',
+				'meta_key'		 => 'event_name',
+				'meta_value'	 => $post_id,
+			);
+
+			$posts = get_posts( $api_key_post );
+
+			foreach ( $posts as $post ) {
+				wp_delete_post( $post->ID, true );
+			}
+		}
+
 		/*
 		 * Save event post meta values
 		 */
@@ -159,6 +176,37 @@ if ( !class_exists( 'TC_Better_Events' ) ) {
 					if ( isset( $metas ) ) {
 						foreach ( $metas as $key => $value ) {
 							update_post_meta( $post_id, $key, $value );
+						}
+					}
+				}
+
+				//Create default API Key for this event if doesn't exists
+				if ( apply_filters( 'tc_create_event_api_key_automatically', true ) == true ) {
+
+					if ( !empty( $_POST[ 'post_title' ] ) ) {
+
+						$wp_api_keys_search = new TC_API_Keys_Search( '', '', $post_id );
+
+						if ( count( $wp_api_keys_search->get_results() ) == 0 ) {
+							$api_key_post = array(
+								'post_content'	 => '',
+								'post_status'	 => 'publish',
+								'post_title'	 => __( '', 'tc' ),
+								'post_type'		 => 'tc_api_keys',
+							);
+
+							$api_key_post	 = apply_filters( 'tc_event_api_key_post', $api_key_post );
+							$api_key_post_id = wp_insert_post( $api_key_post );
+
+							/* Add post metas for the API Key */
+							$api_keys = new TC_API_Keys();
+
+							if ( $api_key_post_id != 0 ) {
+								update_post_meta( $api_key_post_id, 'event_name', $post_id );
+								update_post_meta( $api_key_post_id, 'api_key_name', $_POST[ 'post_title' ] );
+								update_post_meta( $api_key_post_id, 'api_key', $api_keys->get_rand_api_key() );
+								update_post_meta( $api_key_post_id, 'api_username', '' );
+							}
 						}
 					}
 				}
@@ -221,41 +269,41 @@ if ( !class_exists( 'TC_Better_Events' ) ) {
 
 		function tc_general_settings_page_fields( $pages_settings_default_fields ) {
 			$pages_settings_default_fields[] = array(
-				'field_name'		 => 'tc_event_slug',
-				'field_title'		 => __( 'Event Slug', 'tc' ),
-				'field_type'		 => 'texts',
-				'default_value'		 => 'tc-events',
-				'field_description'	 => __( 'Defines value for the Events slug on the front-end. Please flush permalinks after changing this value.', 'tc' ),
-				'section'			 => 'events_settings'
+				'field_name'	 => 'tc_event_slug',
+				'field_title'	 => __( 'Event Slug', 'tc' ),
+				'field_type'	 => 'texts',
+				'default_value'	 => 'tc-events',
+				'tooltip'		 => __( 'Defines value for the Events slug on the front-end. Please flush permalinks after changing this value.', 'tc' ),
+				'section'		 => 'events_settings'
 			);
 
 			$pages_settings_default_fields[] = array(
-				'field_name'		 => 'tc_event_category_slug',
-				'field_title'		 => __( 'Event Category Slug', 'tc' ),
-				'field_type'		 => 'texts',
-				'default_value'		 => 'tc-event-category',
-				'field_description'	 => __( 'Defines value for the Events Category slug. Please flush permalinks after changing this value.', 'tc' ),
-				'section'			 => 'events_settings'
+				'field_name'	 => 'tc_event_category_slug',
+				'field_title'	 => __( 'Event Category Slug', 'tc' ),
+				'field_type'	 => 'texts',
+				'default_value'	 => 'tc-event-category',
+				'tooltip'		 => __( 'Defines value for the Events Category slug. Please flush permalinks after changing this value.', 'tc' ),
+				'section'		 => 'events_settings'
 			);
 
 			$pages_settings_default_fields[] = array(
-				'field_name'		 => 'tc_attach_event_date_to_title',
-				'field_title'		 => __( 'Attach Event Date & Time to an event post title', 'tc' ),
-				'field_type'		 => 'function',
-				'function'			 => 'tc_yes_no',
-				'default_value'		 => 'yes',
-				'field_description'	 => __( 'Automatically show event date & time under post title for event post type', 'tc' ),
-				'section'			 => 'events_settings'
+				'field_name'	 => 'tc_attach_event_date_to_title',
+				'field_title'	 => __( 'Attach Event Date & Time to an event post title', 'tc' ),
+				'field_type'	 => 'function',
+				'function'		 => 'tc_yes_no',
+				'default_value'	 => 'yes',
+				'tooltip'		 => __( 'Automatically show event date & time under post title for event post type', 'tc' ),
+				'section'		 => 'events_settings'
 			);
 
 			$pages_settings_default_fields[] = array(
-				'field_name'		 => 'tc_attach_event_location_to_title',
-				'field_title'		 => __( 'Attach Event Location to an event post title', 'tc' ),
-				'field_type'		 => 'function',
-				'function'			 => 'tc_yes_no',
-				'default_value'		 => 'yes',
-				'field_description'	 => __( 'Automatically show event location under post title for event post type', 'tc' ),
-				'section'			 => 'events_settings'
+				'field_name'	 => 'tc_attach_event_location_to_title',
+				'field_title'	 => __( 'Attach Event Location to an event post title', 'tc' ),
+				'field_type'	 => 'function',
+				'function'		 => 'tc_yes_no',
+				'default_value'	 => 'yes',
+				'tooltip'		 => __( 'Automatically show event location under post title for event post type', 'tc' ),
+				'section'		 => 'events_settings'
 			);
 
 

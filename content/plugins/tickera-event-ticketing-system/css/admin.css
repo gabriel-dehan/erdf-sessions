@@ -1,3 +1,17 @@
+.tc_wrap label.error{
+    color: red !important;
+    padding-left: 10px;
+}
+
+.tc_tooltip{
+    content: "\f223";
+    
+}
+
+a.tc_tooltip_link{
+    color: #fff !important;
+}
+
 a[href="post-new.php?post_type=tc_events"]{
     display: none !important;
 }

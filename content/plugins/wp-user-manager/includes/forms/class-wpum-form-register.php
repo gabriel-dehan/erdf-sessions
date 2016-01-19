@@ -483,6 +483,7 @@ class WPUM_Form_Register extends WPUM_Form {
 
 			// Add ability to extend registration process.
 			do_action( "wpum/form/register/success" , $user_id, $values );
+
 		}
 
 	}

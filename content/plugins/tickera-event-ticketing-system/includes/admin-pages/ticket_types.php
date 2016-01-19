@@ -64,7 +64,7 @@ $columns			 = $tickets->get_columns();
 	}
 	?>
 
-    <form action="" method="post" enctype = "multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data" id="tc_ticket_type_form">
 		<?php wp_nonce_field( 'save_ticket' ); ?>
 		<?php
 		if ( isset( $post_id ) ) {
@@ -104,7 +104,7 @@ $columns			 = $tickets->get_columns();
 											   ?>" id="<?php
 											   echo esc_attr( $field[ 'field_name' ] );
 										   }
-										   ?>" name="<?php echo esc_attr( $field[ 'field_name' ] . '_' . $field[ 'post_field_type' ] ); ?>">
+										   ?>" name="<?php echo esc_attr( $field[ 'field_name' ] . '_' . $field[ 'post_field_type' ] ); ?>" <?php echo isset( $field[ 'required' ] ) ? 'required' : ''; ?> <?php echo isset( $field[ 'number' ] ) ? 'number="true"' : ''; ?>>
 									<span class="description"><?php echo $field[ 'field_description' ]; ?></span>
 								<?php } ?>
 								<?php if ( $field[ 'field_type' ] == 'textarea' ) { ?>
@@ -171,6 +171,7 @@ $columns			 = $tickets->get_columns();
             <form method="get" action="?page=<?php echo esc_attr( $page ); ?>" class="search-form">
                 <p class="search-box">
                     <input type='hidden' name='page' value='<?php echo esc_attr( $page ); ?>' />
+					<input type="hidden" name="post_type" value="tc_events" />
                     <label class="screen-reader-text"><?php _e( 'Search Tickets', 'tc' ); ?>:</label>
                     <input type="text" value="<?php echo esc_attr( $ticketssearch ); ?>" name="s">
                     <input type="submit" class="button" value="<?php _e( 'Search Tickets', 'tc' ); ?>">
@@ -183,7 +184,7 @@ $columns			 = $tickets->get_columns();
     <table cellspacing="0" class="widefat shadow-table">
         <thead>
             <tr>
-                <!--<th style="" class="manage-column column-cb check-column" id="cb" scope="col" width="<?php //echo (isset($col_sizes[0]) ? $col_sizes[0] . '%' : '');              ?>"><input type="checkbox"></th>-->
+                <!--<th style="" class="manage-column column-cb check-column" id="cb" scope="col" width="<?php //echo (isset($col_sizes[0]) ? $col_sizes[0] . '%' : '');               ?>"><input type="checkbox"></th>-->
 				<?php
 				$n = 1;
 				foreach ( $columns as $key => $col ) {

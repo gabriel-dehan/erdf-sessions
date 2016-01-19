@@ -687,8 +687,6 @@ function cimy_registration_form($errors=null, $show_type=0) {
 	if (!is_user_logged_in())
 		$my_user_level = -1;
 
-	// needed by cimy_uef_init_mce.php
-	$cimy_uef_register_page = true;
 	$extra_fields = get_cimyFields(false, true);
 	$wp_fields = get_cimyFields(true);
 
@@ -1190,7 +1188,7 @@ function cimy_registration_form($errors=null, $show_type=0) {
 					$pass1_id = $unique_id;
 
 				if ($input_name == ($prefix."PASSWORD2")) {
-					echo "\n\t\t<div id=\"pass-strength-result\">".__('Strength indicator')."</div>";
+					echo "\n\t\t<div id=\"pass-strength-result\" class=\"hide-if-no-js\" aria-live=\"polite\">".__('Strength indicator')."</div>";
 					echo "\n\t\t<p class=\"description indicator-hint\">".__('Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ &amp; ).')."</p><br />";
 					$pass2_id = $unique_id;
 				}
@@ -1208,13 +1206,6 @@ function cimy_registration_form($errors=null, $show_type=0) {
 		$i++;
 	}
 	echo "\t<br />";
-
-	if ($show_type == 0) {
-		// WP 3.2 or lower (N)
-		if (!empty($tiny_mce_objects) && !function_exists("wp_editor")) {
-			require_once($cuef_plugin_dir.'/cimy_uef_init_mce.php');
-		}
-	}
 
 	if (($show_type != 2) && ($options['captcha'] == "securimage")) {
 		global $cuef_securimage_webpath;
@@ -1333,7 +1324,7 @@ function cimy_uef_registration_redirect($redirect_to) {
 	if (empty($redirect_to)) {
 		$options = cimy_get_options();
 
-		if ($options["redirect_to"] == "source")
+		if ($options["redirect_to"] == "source" && isset($_SERVER["HTTP_REFERER"]))
 			$redirect_to = esc_attr($_SERVER["HTTP_REFERER"]);
 	}
 

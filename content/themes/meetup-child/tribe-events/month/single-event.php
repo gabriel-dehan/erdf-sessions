@@ -27,6 +27,7 @@ $event_id = "{$post->ID}-{$day['daynum']}";
 $link     = tribe_get_event_link( $post );
 $title    = get_the_title( $post );
 $users    = es_event_find_users($post);
+$spots    = es_event_get_spots($post);
 $users_count = count($users);
 
 /**
@@ -200,7 +201,7 @@ $users_count = count($users);
           <?php echo $title ?>
       </a>
       <span class="users-count">
-          <?php echo $users_count ?>/5
+          <?php echo $users_count ?>/<?php echo $spots ?>
       </span>
   </h3>
 </div><!-- #tribe-events-event-# -->

@@ -35,7 +35,7 @@ if ( !class_exists( 'TC_Gateway_API' ) ) {
 			if ( $gateway_name == false ) {
 				$gateway_name = $this->plugin_name;
 			}
-			$value = isset( $settings[ 'gateways' ][ $gateway_name ][ $option_name ] ) ? $settings[ 'gateways' ][ $gateway_name ][ $option_name ] : $default_value;
+			$value = isset( $settings[ 'gateways' ][ $gateway_name ][ $option_name ] ) ? trim( $settings[ 'gateways' ][ $gateway_name ][ $option_name ] ) : trim( $default_value );
 			return apply_filters( 'tc_gateway_option_value', $value, $gateway_name, $option_name, $default_value );
 		}
 
@@ -302,9 +302,6 @@ if ( !class_exists( 'TC_Gateway_API' ) ) {
 			$this->on_creation();
 			$this->init();
 
-			/* if ( empty( $this->plugin_name ) || empty( $this->admin_name ) || empty( $this->public_name ) )
-			  wp_die( __( "Please override all required variables in your {$this->admin_name} payment gateway.", 'tc' ) );
-			 */
 			add_action( 'tc_gateway_settings', array( &$this, 'gateway_admin_settings' ) );
 			add_action( 'tc_handle_payment_return_' . $this->plugin_name, array( &$this, 'ipn' ) );
 

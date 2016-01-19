@@ -1,6 +1,14 @@
 <?php
 add_filter( 'tc_the_content', 'tc_the_content' );
 
+function tc_tooltip( $content ) {
+	if ( !empty( $content ) ) {
+		?>
+		<a title="<?php echo htmlentities( $content ); ?>" class="tc_tooltip"><span class="dashicons dashicons-editor-help"></span></a>
+		<?php
+	}
+}
+
 function tc_js_redirect( $url ) {
 	?>
 	<script type="text/javascript">
@@ -474,10 +482,13 @@ function tc_minimum_total( $total ) {
 	}
 }
 
-function tc_force_login( $field_name, $default_value = '' ) {
-	global $tc_general_settings;
-	if ( isset( $tc_general_settings[ $field_name ] ) ) {
-		$checked = $tc_general_settings[ $field_name ];
+/* General purpose which retrieves yes/no values */
+
+function tc_yes_no_email( $field_name, $default_value = '' ) {
+	$tc_email_settings = get_option( 'tc_email_setting', false );
+
+	if ( isset( $tc_email_settings[ $field_name ] ) ) {
+		$checked = $tc_email_settings[ $field_name ];
 	} else {
 		if ( $default_value !== '' ) {
 			$checked = $default_value;
@@ -487,15 +498,13 @@ function tc_force_login( $field_name, $default_value = '' ) {
 	}
 	?>
 	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
+		<input type="radio" class="<?php echo esc_attr( $field_name ); ?>" name="tc_email_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
 	</label>
 	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
+		<input type="radio" class="<?php echo esc_attr( $field_name ); ?>" name="tc_email_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
 	</label>
 	<?php
 }
-
-/* General purpose which retrieves yes/no values */
 
 function tc_yes_no( $field_name, $default_value = '' ) {
 	global $tc_general_settings;
@@ -510,31 +519,10 @@ function tc_yes_no( $field_name, $default_value = '' ) {
 	}
 	?>
 	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
+		<input type="radio" class="<?php echo esc_attr( $field_name ); ?>" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
 	</label>
 	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
-	</label>
-	<?php
-}
-
-function tc_show_discount_code_field( $field_name, $default_value = '' ) {
-	global $tc_general_settings;
-	if ( isset( $tc_general_settings[ $field_name ] ) ) {
-		$checked = $tc_general_settings[ $field_name ];
-	} else {
-		if ( $default_value !== '' ) {
-			$checked = $default_value;
-		} else {
-			$checked = 'no';
-		}
-	}
-	?>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
-	</label>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
+		<input type="radio" class="<?php echo esc_attr( $field_name ); ?>" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
 	</label>
 	<?php
 }
@@ -567,111 +555,6 @@ function tc_get_admin_order_message( $field_name, $default_value = '' ) {
 	wp_editor( html_entity_decode( stripcslashes( $value ) ), $field_name, array( 'textarea_name' => 'tc_email_setting[' . $field_name . ']', 'textarea_rows' => 2 ) );
 }
 
-function tc_show_tax_rate( $field_name, $default_value = '' ) {
-	global $tc_general_settings;
-	if ( isset( $tc_general_settings[ $field_name ] ) ) {
-		$checked = $tc_general_settings[ $field_name ];
-	} else {
-		if ( $default_value !== '' ) {
-			$checked = $default_value;
-		} else {
-			$checked = 'yes';
-		}
-	}
-	?>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
-	</label>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
-	</label>
-	<?php
-}
-
-function tc_tax_inclusive( $field_name, $default_value = '' ) {
-	global $tc_general_settings;
-	if ( isset( $tc_general_settings[ $field_name ] ) ) {
-		$checked = $tc_general_settings[ $field_name ];
-	} else {
-		if ( $default_value !== '' ) {
-			$checked = $default_value;
-		} else {
-			$checked = 'yes';
-		}
-	}
-	?>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
-	</label>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
-	</label>
-	<?php
-}
-
-function tc_show_owner_fields( $field_name, $default_value = '' ) {
-	global $tc_general_settings;
-	if ( isset( $tc_general_settings[ $field_name ] ) ) {
-		$checked = $tc_general_settings[ $field_name ];
-	} else {
-		if ( $default_value !== '' ) {
-			$checked = $default_value;
-		} else {
-			$checked = 'yes';
-		}
-	}
-	?>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
-	</label>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
-	</label>
-	<?php
-}
-
-function tc_client_send_order_messages( $field_name, $default_value = '' ) {
-	global $tc_email_settings;
-	if ( isset( $tc_email_settings[ $field_name ] ) ) {
-		$checked = $tc_email_settings[ $field_name ];
-	} else {
-		if ( $default_value !== '' ) {
-			$checked = $default_value;
-		} else {
-			$checked = 'yes';
-		}
-	}
-	?>
-	<label>
-		<input type="radio" name="tc_email_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
-	</label>
-	<label>
-		<input type="radio" name="tc_email_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
-	</label>
-	<?php
-}
-
-function tc_client_send_order_placed_messages( $field_name, $default_value = '' ) {
-	global $tc_email_settings;
-	if ( isset( $tc_email_settings[ $field_name ] ) ) {
-		$checked = $tc_email_settings[ $field_name ];
-	} else {
-		if ( $default_value !== '' ) {
-			$checked = $default_value;
-		} else {
-			$checked = 'yes';
-		}
-	}
-	?>
-	<label>
-		<input type="radio" name="tc_email_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
-	</label>
-	<label>
-		<input type="radio" name="tc_email_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
-	</label>
-	<?php
-}
-
 function tc_email_send_type( $field_name, $default_value = '' ) {
 	global $tc_email_settings;
 	if ( isset( $tc_email_settings[ $field_name ] ) ) {
@@ -693,48 +576,6 @@ function tc_email_send_type( $field_name, $default_value = '' ) {
 	<?php
 }
 
-function tc_admin_send_order_messages( $field_name, $default_value = '' ) {
-	global $tc_email_settings;
-	if ( isset( $tc_email_settings[ $field_name ] ) ) {
-		$checked = $tc_email_settings[ $field_name ];
-	} else {
-		if ( $default_value !== '' ) {
-			$checked = $default_value;
-		} else {
-			$checked = 'yes';
-		}
-	}
-	?>
-	<label>
-		<input type="radio" name="tc_email_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?>  /><?php _e( 'Yes', 'tc' ); ?>
-	</label>
-	<label>
-		<input type="radio" name="tc_email_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
-	</label>
-	<?php
-}
-
-function tc_show_fees( $field_name, $default_value = '' ) {
-	global $tc_general_settings;
-	if ( isset( $tc_general_settings[ $field_name ] ) ) {
-		$checked = $tc_general_settings[ $field_name ];
-	} else {
-		if ( $default_value !== '' ) {
-			$checked = $default_value;
-		} else {
-			$checked = 'yes';
-		}
-	}
-	?>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?> /><?php _e( 'Yes', 'tc' ); ?>
-	</label>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
-	</label>
-	<?php
-}
-
 function tc_global_fee_type( $field_name, $default_value = '' ) {
 	global $tc_general_settings;
 	if ( isset( $tc_general_settings[ $field_name ] ) ) {
@@ -752,44 +593,19 @@ function tc_global_fee_type( $field_name, $default_value = '' ) {
 	<?php
 }
 
-function tc_show_cart( $field_name, $default_value = '' ) {
+function tc_global_fee_scope( $field_name, $default_value = '' ) {
 	global $tc_general_settings;
 	if ( isset( $tc_general_settings[ $field_name ] ) ) {
 		$checked = $tc_general_settings[ $field_name ];
 	} else {
-		if ( $default_value !== '' ) {
-			$checked = $default_value;
-		} else {
-			$checked = 'no';
-		}
+		$checked = $default_value;
 	}
 	?>
 	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?> /><?php _e( 'Yes', 'tc' ); ?>
+		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="ticket" <?php checked( $checked, 'ticket', true ); ?> /><?php _e( 'Ticket', 'tc' ); ?>
 	</label>
 	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
-	</label>
-	<?php
-}
-
-function tc_radio_checkbox( $field_name, $default_value = '' ) {
-	global $tc_general_settings;
-	if ( isset( $tc_general_settings[ $field_name ] ) ) {
-		$checked = $tc_general_settings[ $field_name ];
-	} else {
-		if ( $default_value !== '' ) {
-			$checked = $default_value;
-		} else {
-			$checked = 'no';
-		}
-	}
-	?>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="yes" <?php checked( $checked, 'yes', true ); ?> /><?php _e( 'Yes', 'tc' ); ?>
-	</label>
-	<label>
-		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="no" <?php checked( $checked, 'no', true ); ?> /><?php _e( 'No', 'tc' ); ?>
+		<input type="radio" name="tc_general_setting[<?php echo esc_attr( $field_name ); ?>]" value="order" <?php checked( $checked, 'order', true ); ?> /><?php _e( 'Order', 'tc' ); ?>
 	</label>
 	<?php
 }
@@ -1319,12 +1135,6 @@ function tc_no_index_no_follow() {//prevent search engines to index a page
 
 function tc_get_order_id_by_name( $slug ) {
 	global $wpdb;
-	/* $args = array(
-	  'post_name'		 => strtolower($slug),
-	  'post_type'		 => 'tc_orders',
-	  'posts_per_page' => 1,
-	  'post_status'	 => 'any'
-	  ); */
 
 	$order_post_id	 = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_name = '%s'", strtolower( $slug ) ) );
 	$post			 = get_post( $order_post_id );

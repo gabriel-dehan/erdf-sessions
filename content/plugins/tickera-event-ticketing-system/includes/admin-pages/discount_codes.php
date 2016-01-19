@@ -59,7 +59,7 @@ $columns			 = $discounts->get_columns();
 	}
 	?>
 
-    <form action="" method="post" enctype = "multipart/form-data">
+    <form action="" method="post" enctype = "multipart/form-data" id="tc_discount_code_form">
 		<?php wp_nonce_field( 'save_discount' ); ?>
 		<?php
 		if ( isset( $post_id ) ) {
@@ -95,7 +95,7 @@ $columns			 = $discounts->get_columns();
 											echo esc_attr( $discount->details->{$field[ 'post_field_type' ]} );
 										}
 									}
-									?>" id="<?php echo $field[ 'field_name' ]; ?>" name="<?php echo $field[ 'field_name' ] . '_' . $field[ 'post_field_type' ]; ?>">
+									?>" id="<?php echo $field[ 'field_name' ]; ?>" name="<?php echo $field[ 'field_name' ] . '_' . $field[ 'post_field_type' ]; ?>"  <?php echo isset( $field[ 'required' ] ) ? 'required' : ''; ?> <?php echo isset( $field[ 'number' ] ) ? 'number="true"' : ''; ?>>
 									<span class="description"><?php echo $field[ 'field_description' ]; ?></span>
 								<?php } ?>
 								<?php if ( $field[ 'field_type' ] == 'textarea' ) { ?>

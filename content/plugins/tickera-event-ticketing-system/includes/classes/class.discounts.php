@@ -117,7 +117,7 @@ if ( !class_exists( 'TC_Discounts' ) ) {
 
 			$new_total = $total_cart - $this->max_discount( $discount_value, $total_cart );
 
-			return TC_Discounts::max_discount($discount_value, $total_cart);
+			return TC_Discounts::max_discount( $discount_value, $total_cart );
 		}
 
 		function discount_used_times( $discount_code ) {
@@ -261,7 +261,7 @@ if ( !class_exists( 'TC_Discounts' ) ) {
 					}
 
 					$total = $_SESSION[ 'tc_cart_subtotal' ];
-					
+
 					$_SESSION[ 'discount_value_total' ] = TC_Discounts::max_discount( tc_minimum_total( $discount_value_total ), $total );
 
 					return TC_Discounts::max_discount( $discount_value_total, $total );
@@ -368,7 +368,9 @@ if ( !class_exists( 'TC_Discounts' ) ) {
 					'field_type'		 => 'text',
 					'field_description'	 => __( 'For example: 9.99', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_meta'
+					'post_field_type'	 => 'post_meta',
+					'number'			 => true,
+					'required'			 => true
 				),
 				array(
 					'field_name'		 => 'discount_availability',
@@ -386,7 +388,8 @@ if ( !class_exists( 'TC_Discounts' ) ) {
 					'field_type'		 => 'text',
 					'field_description'	 => __( '(optional) How many times this discount code can be used before it is void, e.g. 100', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_meta'
+					'post_field_type'	 => 'post_meta',
+					'number'			 => true
 				),
 				array(
 					'field_name'		 => 'expiry_date',
@@ -405,7 +408,7 @@ if ( !class_exists( 'TC_Discounts' ) ) {
 					'field_type'		 => 'textarea',
 					'field_description'	 => __( 'Discount Code, e.g. ABC123. <strong>One discount code per line</strong>.', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_title'
+					'post_field_type'	 => 'post_title',
 				);
 			} else {
 				$first_field = array(
@@ -414,7 +417,8 @@ if ( !class_exists( 'TC_Discounts' ) ) {
 					'field_type'		 => 'text',
 					'field_description'	 => __( 'Discount Code, e.g. ABC123', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_title'
+					'post_field_type'	 => 'post_title',
+					'required'			 => true
 				);
 			}
 

@@ -61,7 +61,7 @@ $cart_contents		 = apply_filters( 'tc_cart_contents', array() );
 								if ( isset( $field[ 'field_default_value' ] ) && $field[ 'field_default_value' ] == trim( $field_value ) || (empty( $field[ 'field_default_value' ] ) && isset( $field_values[ 0 ] ) && $field_values[ 0 ] == trim( $field_value ) ) ) {
 									echo 'checked';
 								}
-								?>></label><?php echo trim( $field_value ); ?>
+								?>><?php echo trim( $field_value ); ?></label>
 								<?php
 							}
 						}
@@ -86,7 +86,7 @@ $cart_contents		 = apply_filters( 'tc_cart_contents', array() );
 								if ( isset( $field[ 'field_default_value' ] ) && $field[ 'field_default_value' ] == trim( $field_value ) ) {
 									echo 'checked';
 								}
-								?>></label><?php echo trim( $field_value ); ?>
+								?>><?php echo trim( $field_value ); ?></label>
 								<?php
 							}
 							?>
@@ -223,8 +223,7 @@ $cart_contents		 = apply_filters( 'tc_cart_contents', array() );
 												if ( isset( $field[ 'field_default_value' ] ) && $field[ 'field_default_value' ] == trim( $field_value ) || (empty( $field[ 'field_default_value' ] ) && isset( $field_values[ 0 ] ) && $field_values[ 0 ] == trim( $field_value ) ) ) {
 													echo 'checked';
 												}
-												?>></label><?php echo trim( $field_value ); ?>
-												<?php
+												?>><?php echo trim( $field_value ); ?></label><?php
 											}
 										}
 										?>
@@ -248,8 +247,7 @@ $cart_contents		 = apply_filters( 'tc_cart_contents', array() );
 												if ( isset( $field[ 'field_default_value' ] ) && $field[ 'field_default_value' ] == trim( $field_value ) ) {
 													echo 'checked';
 												}
-												?>></label><?php echo trim( $field_value ); ?>
-												<?php
+												?>><?php echo trim( $field_value ); ?></label><?php
 											}
 											?>
 										<input type="hidden" class="checkbox_values" name="<?php echo 'owner_data_' . $field[ 'field_name' ] . '_' . $field[ 'post_field_type' ]; ?>[<?php echo $ticket_type; ?>][<?php echo $owner_index; ?>]" value="" />

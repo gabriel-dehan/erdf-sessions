@@ -48,7 +48,8 @@ if ( !class_exists( 'TC_Tickets' ) ) {
 					'field_type'		 => 'text',
 					'field_description'	 => __( 'Example: Standard ticket, VIP, Early Bird, Student, Regular Admission, etc.', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_title'
+					'post_field_type'	 => 'post_title',
+					'required'			 => true,
 				),
 				array(
 					'field_name'		 => 'ticket_description',
@@ -66,7 +67,9 @@ if ( !class_exists( 'TC_Tickets' ) ) {
 					'field_type'		 => 'text',
 					'field_description'	 => __( 'Example: 29.90 (without currency symbol)', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_meta'
+					'post_field_type'	 => 'post_meta',
+					'required'			 => true,
+					'number'			 => true
 				),
 				array(
 					'field_name'		 => 'quantity_available',
@@ -75,7 +78,8 @@ if ( !class_exists( 'TC_Tickets' ) ) {
 					'field_type'		 => 'text',
 					'field_description'	 => __( 'Whole number like 100, empty field or 0 for unlimited', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_meta'
+					'post_field_type'	 => 'post_meta',
+					'number'			 => true
 				),
 				array(
 					'field_name'			 => 'quantity_sold',
@@ -95,7 +99,8 @@ if ( !class_exists( 'TC_Tickets' ) ) {
 					'field_type'		 => 'text',
 					'field_description'	 => __( 'Whole number e.g. 5, empty field or 0 for no minimum', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_meta'
+					'post_field_type'	 => 'post_meta',
+					'number'			 => true
 				),
 				array(
 					'field_name'		 => 'max_tickets_per_order',
@@ -104,7 +109,8 @@ if ( !class_exists( 'TC_Tickets' ) ) {
 					'field_type'		 => 'text',
 					'field_description'	 => __( 'Whole number e.g. 5, empty field or 0 for no maximum', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_meta'
+					'post_field_type'	 => 'post_meta',
+					'number'			 => true
 				),
 				array(
 					'field_name'		 => 'available_checkins_per_ticket',
@@ -113,7 +119,8 @@ if ( !class_exists( 'TC_Tickets' ) ) {
 					'field_type'		 => 'text',
 					'field_description'	 => __( 'It is useful if the event last more than one day. For instance, if duration of your event is 5 day, you should choose 5 or more for Available Check-ins', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_meta'
+					'post_field_type'	 => 'post_meta',
+					'number'			 => true
 				),
 				array(
 					'field_name'		 => 'ticket_template',
@@ -146,7 +153,8 @@ if ( !class_exists( 'TC_Tickets' ) ) {
 					'field_type'		 => 'text',
 					'field_description'	 => __( 'Ticket / Service Fee (you can add additional fee per ticket in order to cover payment gateway, service or any other type of cost) - 0 or empty for no service fee.', 'tc' ),
 					'table_visibility'	 => true,
-					'post_field_type'	 => 'post_meta'
+					'post_field_type'	 => 'post_meta',
+					'number'			 => true
 				);
 
 				$default_fields[] = array(

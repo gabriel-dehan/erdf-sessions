@@ -7,14 +7,23 @@ require('scripts.php');
 require_once('db/es_db_users_events.php');
 
 require_once('setup.php');
+require_once('shortcodes.php');
 require_once('customize-tribe-events.php');
 require_once('event-manager.php');
 require_once('register-handler.php');
+
 
 function es_event_find_users($event) {
   $event_manager = new EventManager($event);
   return $event_manager->find_onboard_users();
 }
+
+function es_event_get_spots($event) {
+  $event_manager = new EventManager($event);
+  $spots = intval($event_manager->get_spots());
+  return ($spots > 0) ? $spots : 5;
+}
+
 
 /*
  * Possible solution for Single Event page 404 errors where the WP_Query has an attachment set

@@ -139,8 +139,21 @@ $columns = $tickets_instances->get_columns();
 		get_currentuserinfo();
 		$current_user_name	 = $current_user->user_login;
 		$staff_api_keys_num	 = 0;
+		$has_api_records	 = false;
+
+		if ( current_user_can( 'manage_options' ) ) {
+			$wp_api_keys_search_all = new TC_API_Keys_Search( '', '', 'all' );
+
+			if ( count( $wp_api_keys_search_all->get_results() ) > 0 ) {
+				$has_api_records = true;
+			}
+		}
 
 		$wp_api_keys_search = new TC_API_Keys_Search( '', '', $ticket_event_id );
+
+		if ( count( $wp_api_keys_search->get_results() ) > 0 ) {
+			$has_api_records = true;
+		}
 
 		if ( !current_user_can( 'manage_options' ) ) {
 			foreach ( $wp_api_keys_search->get_results() as $api_key ) {
@@ -152,7 +165,7 @@ $columns = $tickets_instances->get_columns();
 		}
 
 
-		if ( count( $wp_api_keys_search->get_results() ) > 0 && (current_user_can( 'manage_options' ) || (!current_user_can( 'manage_options' ) && $staff_api_keys_num > 0)) ) {
+		if ( $has_api_records && (current_user_can( 'manage_options' ) || (!current_user_can( 'manage_options' ) && $staff_api_keys_num > 0)) ) {
 			?>
 			<form action="" method="post" enctype="multipart/form-data">
 				<table class="checkin-table">
@@ -168,6 +181,16 @@ $columns = $tickets_instances->get_columns();
 											?>
 											<option value="<?php echo esc_attr( $api_key->ID ); ?>"><?php echo $api_key_obj->details->api_key_name; ?></option>
 											<?php
+										}
+									}
+									if ( current_user_can( 'manage_options' ) ) {
+										foreach ( $wp_api_keys_search_all->get_results() as $api_key ) {
+											$api_key_obj = new TC_API_Key( $api_key->ID );
+											if ( current_user_can( 'manage_options' ) || ($api_key_obj->details->api_username == $current_user_name) ) {
+												?>
+												<option value="<?php echo esc_attr( $api_key->ID ); ?>"><?php echo $api_key_obj->details->api_key_name; ?></option>
+												<?php
+											}
 										}
 									}
 									?>
@@ -200,7 +223,6 @@ $columns = $tickets_instances->get_columns();
 		<table cellspacing="0" class="widefat shadow-table">
 			<thead>
 				<tr>
-					<!--<th style="" class="manage-column column-cb check-column" id="cb" scope="col" width="<?php //echo (isset($col_sizes[0]) ? $col_sizes[0] . '%' : '');                                           ?>"><input type="checkbox"></th>-->
 					<?php
 					$n = 1;
 					foreach ( $columns as $col ) {

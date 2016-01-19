@@ -115,6 +115,20 @@ You can find [setup instructions here »](http://tickera.com/documentation-categ
 Plugin Name: Tickera
 Author: Tickera.com
 
+= 3.2.1.9 =
+- Added additional feature for auto-creating API Keys for event (upon creating an event)
+- Show "Check in" option for the admin user in the Attendees & Tickets details screen by default
+- Trimmed payment gateway value fields in order to avoid errors with copy/paste gateways's API keys
+- Added tooltips, conditional show/hide and input validation on the settings page in the admin
+- Added input validation for ticket types and discount codes
+- Fixed issue with Ticket Type search and permissions in the admin
+
+= 3.2.1.8 =
+- Fixed issue with radio and checkbox labels
+
+= 3.2.1.7 =
+- Added Global Fee Scope option
+
 = 3.2.1.6 =
 - Show buyer name in the attendees & tickets list (in the admin) if ticket owner name is not set
 - Added additional hooks for developers

@@ -117,13 +117,52 @@ function tc_show_extra_profile_fields_order_history( $user ) {
 
 add_action( 'tc_cart_col_title_before_total_price', 'tc_cart_col_title_before_total_price' );
 
+function tc_is_disabled_fee_column() {
+	$tc_general_settings = get_option( 'tc_general_setting', false );
+	$use_global_fees	 = isset( $tc_general_settings[ 'use_global_fees' ] ) ? $tc_general_settings[ 'use_global_fees' ] : 'no';
+
+	$disabled = false;
+
+	if ( $use_global_fees == 'yes' ) {
+		$global_fee_type	 = $tc_general_settings[ 'global_fee_type' ];
+		$global_fee_scope	 = $tc_general_settings[ 'global_fee_scope' ];
+
+
+		if ( empty( $global_fee_scope ) || $global_fee_scope == '' ) {
+			$global_fee_scope = 'ticket';
+		}
+
+		if ( $global_fee_scope == 'order' && $global_fee_type == 'fixed' ) {
+			$disabled = true;
+		}
+	}
+
+	if ( $disabled ) {
+		add_filter( 'tc_cart_table_colspan', 'tc_cart_table_colspan_modify', 10, 1 );
+	}
+
+	return $disabled;
+}
+
+function tc_cart_table_colspan_modify( $colspan ) {
+	return $colspan - 1;
+}
+
 function tc_cart_col_title_before_total_price() {
 	$tc_general_settings = get_option( 'tc_general_setting', false );
 	$fees_label			 = isset( $tc_general_settings[ 'fees_label' ] ) ? $tc_general_settings[ 'fees_label' ] : 'FEES';
+
+
+	$use_global_fees = isset( $tc_general_settings[ 'use_global_fees' ] ) ? $tc_general_settings[ 'use_global_fees' ] : 'no';
+
+	$disabled = tc_is_disabled_fee_column();
+
 	if ( !isset( $tc_general_settings[ 'show_fees' ] ) || (isset( $tc_general_settings[ 'show_fees' ] ) && $tc_general_settings[ 'show_fees' ] == 'yes') ) {
-		?>
-		<th><?php echo $fees_label; ?></th>
-		<?php
+		if ( !$disabled ) {
+			?>
+			<th><?php echo $fees_label; ?></th>
+			<?php
+		}
 	}
 }
 
@@ -157,32 +196,59 @@ function tc_cart_col_value_before_total_price( $ticket_type, $ordered_count, $ti
 	if ( $use_global_fees == 'yes' ) {
 		$global_fee_type	 = $tc_general_settings[ 'global_fee_type' ];
 		$global_fee_value	 = $tc_general_settings[ 'global_fee_value' ];
+		$global_fee_scope	 = $tc_general_settings[ 'global_fee_scope' ];
+
+		if ( empty( $global_fee_scope ) || $global_fee_scope == '' ) {
+			$global_fee_scope = 'ticket';
+		}
 
 		if ( $global_fee_value == '' || !isset( $global_fee_value ) ) {
 			$fee = 0;
 		} else {
 			if ( $global_fee_type == 'fixed' ) {
-				$fee = round( ($ordered_count * $global_fee_value ), 2 );
+				$fee = apply_filters( 'tc_global_fixed_fee_value', round( ($ordered_count * $global_fee_value ), 2 ), $ordered_count, $global_fee_value );
 			} else {
-				$fee = round( (($ticket_price * $ordered_count) / 100) * $global_fee_value, 2 );
+				$fee = apply_filters( 'tc_global_percentage_fee_value', round( (($ticket_price * $ordered_count) / 100) * $global_fee_value, 2 ), $ticket_price, $ordered_count, $global_fee_value );
 			}
 		}
 	}
 
-	$total_fees = $total_fees + $fee;
+	$total_fees = apply_filters( 'tc_total_fees_value', $total_fees + $fee, $use_global_fees, isset( $global_fee_scope ) ? $global_fee_scope : 'ticket', $ordered_count, isset( $global_fee_value ) ? $global_fee_value : 0, $ticket_price, $global_fee_type );
 
 	if ( !isset( $_SESSION ) ) {
 		session_start();
 	}
 
+	$disabled = tc_is_disabled_fee_column();
+
 	$_SESSION[ 'tc_total_fees' ] = $total_fees;
 
 	$tc_general_settings = get_option( 'tc_general_setting', false );
 	if ( !isset( $tc_general_settings[ 'show_fees' ] ) || (isset( $tc_general_settings[ 'show_fees' ] ) && $tc_general_settings[ 'show_fees' ] == 'yes') ) {
-		?>
-		<td class="ticket-fee" class="ticket_fee"><?php echo apply_filters( 'tc_cart_currency_and_format', $fee ); ?></td>
-		<?php
+		if ( !$disabled ) {
+			?>
+			<td class="ticket-fee" class="ticket_fee"><?php echo apply_filters( 'tc_cart_currency_and_format', $fee ); ?></td>
+			<?php
+		}
 	}
+}
+
+add_filter( 'tc_total_fees_value', 'tc_total_fees_value_modify', 10, 7 );
+
+function tc_total_fees_value_modify( $total_fees, $use_global_fees, $global_fee_scope, $ordered_count,
+									 $global_fee_value, $ticket_price, $global_fee_type ) {
+	if ( $use_global_fees == 'yes' && $global_fee_scope == 'order' && $global_fee_type == 'fixed' ) {
+		$total_fees = $global_fee_value;
+	}
+	return $total_fees;
+}
+
+function tc_modify_global_fixed_fee_value( $value, $ordered_count, $global_fee_value ) {
+	return $global_fee_value;
+}
+
+function tc_global_percentage_fee_value( $value, $ticket_price, $ordered_count, $global_fee_value ) {
+	return $value;
 }
 
 add_action( 'tc_cart_col_value_before_total_price_total', 'tc_cart_col_value_before_total_price_total', 11, 1 );

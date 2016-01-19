@@ -8,7 +8,7 @@ function cimy_admin_define_extra_fields() {
 // if (!empty($_POST))
 // 	print_r($_POST);
 
-	$role = & get_role('administrator');
+	$role = get_role('administrator');
 	$role->add_cap('view_cimy_extra_fields');
 
 	$errors = Array();
@@ -1273,7 +1273,7 @@ function cimy_admin_users_list_page() {
 					'per_page' => $users_per_page,
 				));
 			}
-			function bulk_actions() {}
+			function bulk_actions( $which = '' ) {}
 			function extra_tablenav($which) {
 				if ('top' != $which)
 					return;
@@ -1366,7 +1366,7 @@ function cimy_admin_users_list_page() {
 					'per_page' => $users_per_page,
 				));
 			}
-			function bulk_actions() {}
+			function bulk_actions( $which = '' ) {}
 			function extra_tablenav($which) {
 				if ('top' != $which)
 					return;
