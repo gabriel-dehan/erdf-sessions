@@ -1,0 +1,139 @@
+.single-tribe_events {
+    .main-container > section {
+        padding-top: 22px;
+    }
+
+    font-family: 'Neris' !important;
+    h2 {
+        font-family: 'Neris';
+        font-size: 2.6em;
+    }
+    h3 { font-size: 1.4em; }
+    h4 { font-size: 1em; }
+
+    .tribe-events-single-section {
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    .tribe-events-meta-group-details {
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 2em;
+    }
+
+    .tribe-events-abbr {
+        font-weight: normal;
+        font-size: 1em;
+
+        .date {
+            font-size: 2.1em;
+            text-transform: capitalize;
+        }
+
+    }
+
+    .tribe-events-time {
+        font-weight: normal;
+        font-size: 0.8em;
+        color: #494949;
+
+    }
+
+    .tribe-event-program {
+        margin: 15px 0 30px 0;
+        p { font-size: 1.1em; }
+    }
+
+    .tribe-event-participants {
+        margin: 40px 0 40px 0;
+
+        .show-spots-left {
+            font-size: 1.2em;
+            padding-left: 15px;
+            margin-bottom: 15px;
+            color: #E03E52;
+        }
+
+        .show-participants .none {
+            font-size: 1.2em;
+            padding: 15px;
+        }
+        .show-participants ul {
+            margin-left: 0;
+            font-size: 1.2em;
+
+            li {
+                color: #005EB8;
+                list-style: none;
+                border-bottom: 1px solid lightblue;
+                padding: 10px 15px;
+            }
+            li:last-child {
+                border-bottom: 1px solid #EBFAFF;
+
+            }
+
+
+        }
+    }
+
+    .user-status {
+        font-size: 1.1em;
+        margin-bottom: 20px;
+
+        .status {
+            color: #48A23F;
+            text-transform: lowercase;
+            font-weight: bold;
+        }
+    }
+
+    .user-subscribe button {
+        border: none;
+
+        font-family: 'Neris';
+        font-size: 1.2em;
+        font-weight: bold;
+
+        background: #00a3e0;
+        color: white;
+
+        display: block;
+
+        margin-bottom: 25px;
+        padding: 7px 18px;
+
+        &.unsub {
+            background: #E03E52;
+        }
+    }
+}
+
+.btn-book-event-big {
+    margin: 35px 0 30px 0;
+
+    button {
+        border: none;
+
+        text-align: center;
+        font-family: 'Neris';
+        font-size: 1.6em;
+        font-weight: bold;
+
+        background: #00a3e0;
+        color: white;
+
+        display: block;
+
+        padding: 15px 0;
+        margin: 0 auto;
+        width: 300px;
+
+        &.disabled {
+            background: #BDBDBD;
+        }
+    }
+}

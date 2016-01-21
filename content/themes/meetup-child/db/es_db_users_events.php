@@ -88,7 +88,7 @@ class ES_DB_UsersEvents {
   }
 
   public function user_subscribed($user, $event) {
-    return count($this->fetch_subscription($user, $event));
+    return count($this->fetch_subscription($user, $event)) > 0;
   }
 
   public function fetch_subscription($user, $event) {
@@ -123,6 +123,21 @@ class ES_DB_UsersEvents {
 
     $wpdb->insert( $this->table_name, $data, $column_formats);
 	}
+
+	public function remove($user, $event) {
+    global $wpdb;
+
+    if ( empty($user->ID) || !is_numeric($user->ID) ) {
+      return false;
+    }
+    if ( empty($event->ID) || !is_numeric($event->ID) ) {
+      return false;
+    }
+
+
+    $wpdb->delete( $this->table_name, array( 'user_id' => $user->ID, 'event_id' => $event->ID ) );
+	}
+
 
 	public function delete( $id = false ) {
     global $wpdb;

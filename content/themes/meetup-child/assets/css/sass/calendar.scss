@@ -1,0 +1,46 @@
+#tribe-events-content {
+
+    .tribe-events-month-event-title .users-count {
+        font-family: Neris;
+        font-weight: normal;
+        font-size: 1.1em;
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+        color: #00a3e0;
+
+        .num {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    }
+
+    .tribe-events-calendar thead th {
+        // background-color: #005EB8;
+    }
+
+    .tribe-events-calendar td.tribe-events-past div[id*=tribe-events-daynum-],
+    .tribe-events-calendar td.tribe-events-past div[id*=tribe-events-daynum-]>a {
+        // background-color: #00A3E0;
+        // color: #fff;
+    }
+
+
+    .tribe-events-month-event-title .book-event {
+        margin-top: 10px;
+
+        font-family: 'Neris';
+        text-align: center;
+        font-size: 1.2em;
+        font-weight: bold;
+        background: #00A3E0;
+        color: white;
+        width: 100%;
+        display: inline-block;
+        padding: 10px 0;
+
+        &.disabled {
+            background: #BDBDBD;
+        }
+    }
+}

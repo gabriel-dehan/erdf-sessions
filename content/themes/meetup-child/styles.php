@@ -11,9 +11,9 @@ function admin_css() {
 }
 add_action('admin_print_styles', 'admin_css', 11 );
 
-function home_css() {
-    $home_css = get_stylesheet_directory_uri() . '/assets/css/home.css';
-    wp_enqueue_style( 'home-css', $home_css );
+function front_css() {
+    $front_css = get_stylesheet_directory_uri() . '/assets/css/dist/front.css';
+    wp_enqueue_style( 'front-css', $front_css );
 }
 
-add_action( 'wp_enqueue_scripts', 'home_css', 11 );
+add_action( 'wp_enqueue_scripts', 'front_css', 11 );

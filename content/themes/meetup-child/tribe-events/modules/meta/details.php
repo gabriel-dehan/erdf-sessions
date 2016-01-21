@@ -76,9 +76,12 @@ $website = tribe_get_event_website_link();
 		elseif ( tribe_event_is_all_day() ):
 			?>
 
-			<dt> <?php esc_html_e( 'Date:', 'the-events-calendar' ) ?> </dt>
 			<dd>
-				<abbr class="tribe-events-abbr updated published dtstart" title="<?php esc_attr_e( $start_ts ) ?>"> <?php esc_html_e( $start_date ) ?> </abbr>
+				  <div class="tribe-events-abbr updated published dtstart" title="<?php esc_attr_e( $start_ts ) ?>"> <span class="date"> <?php esc_html_e( $start_date ) ?></span>
+          </div>
+          <div class="tribe-events-time">
+              De <?php echo $time_formatted; ?>
+          </div>
 			</dd>
 
 		<?php
@@ -100,16 +103,13 @@ $website = tribe_get_event_website_link();
 		// Single day events
 		else :
 			?>
-
-			<dt> <?php esc_html_e( 'Date:', 'the-events-calendar' ) ?> </dt>
 			<dd>
-				<abbr class="tribe-events-abbr updated published dtstart" title="<?php esc_attr_e( $start_ts ) ?>"> <?php esc_html_e( $start_date ) ?> </abbr>
-			</dd>
-
-			<dt> <?php echo esc_html( $time_title ); ?> </dt>
-			<dd><div class="tribe-events-abbr updated published dtstart" title="<?php esc_attr_e( $end_ts ) ?>">
-					<?php echo $time_formatted; ?>
-				</div></dd>
+				  <div class="tribe-events-abbr updated published dtstart" title="<?php esc_attr_e( $start_ts ) ?>"> <span class="date"> <?php esc_html_e( $start_date ) ?></span>
+          </div>
+          <div class="tribe-events-time">
+              De <?php echo $time_formatted; ?>
+          </div>
+      </dd>
 
 		<?php endif ?>
 
