@@ -11,6 +11,7 @@ require_once('shortcodes.php');
 require_once('customize-tribe-events.php');
 require_once('event-manager.php');
 require_once('register-handler.php');
+require_once('emails/emails.php');
 
 
 function es_event_find_users($event) {

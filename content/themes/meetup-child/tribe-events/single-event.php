@@ -29,6 +29,7 @@ if (isset($_POST['subscribe'])) {
   $is_subscribed = $users_events->user_subscribed($current_user, $event);
   if (!$is_subscribed) {
     $users_events->add($current_user, $event);
+    do_action( 'book_session', $current_user->email );
   } else {
     echo 'You already subscribed';
   }
