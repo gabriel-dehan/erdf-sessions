@@ -1,6 +1,7 @@
 <?php
-function require_all($folder){ foreach (glob("{$folder}/*.php") as $filename) { require_once($filename); } }
+foreach (glob(get_stylesheet_directory() . "/emails/templates/*.php") as $template) {
+    require_once("templates/" . basename($template));
+}
 
-require_all("templates");
-require_once('notify.php');
 require_once('actions.php');
+require_once('notify.php');

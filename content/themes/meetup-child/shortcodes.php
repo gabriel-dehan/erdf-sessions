@@ -1,34 +1,10 @@
 <?php
 
-function next_events() {
-?>
-<ul>
-<?php
-  $args = array(
-    'post_type' => 'revision',
-    'post_status' => 'publish',
-    'posts_per_page' => 4,
-    'caller_get_posts'=> 1
-    );
+function es_calendar( $atts ){
+    return '<div class="events-archive events-gridview"><div id="tribe-events-content"><div id="home-calendar"></div></div></div>';
+    // tribe_get_template_part( 'month/content' );
 
-    $query = null;
-    $query = new WP_Query($args);
-    if( $query->have_posts() ) {
-      while ($query->have_posts()) : $query->the_post();
-    ?>
-    <li>
-        <a href="<?php the_permalink() ?>">
-            <?php the_title(); ?>
-        </a>
-    </li>
-    <?php
-    endwhile;
-    }
-    wp_reset_query();  // Restore global post data stomped by the_post().
-
-
-    ?>
-</ul>
-    <?php
+    //return '<iframe src="/events#tribe-events-content"></iframe>';
 }
-add_shortcode( 'next_events', 'next_events' );
+
+add_shortcode( 'events_calendar', 'es_calendar' );

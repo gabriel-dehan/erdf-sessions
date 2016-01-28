@@ -197,7 +197,7 @@ $users_count = count($users);
 
 <div id="tribe-events-event-<?php echo esc_attr( $event_id ); ?>" class="<?php tribe_events_event_classes() ?>" data-tribejson='<?php echo esc_attr( tribe_events_template_data( $post ) ); ?>'>
 	<h3 class="tribe-events-month-event-title">
-      <span class="users-count">
+      <span class="users-count <?php echo ($spots - $users_count == 0) ? 'disabled' : ''; ?> ">
           Places restantes: <span class="num"><?php echo $spots - $users_count ?></span>
       </span>
       <?php if ( ($spots - $users_count) == 0 ) { ?>

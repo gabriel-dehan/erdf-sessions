@@ -20,7 +20,7 @@ global $wp_locale;
 ?>
 
 <?php do_action( 'tribe_events_before_the_grid' ) ?>
-	<table class="tribe-events-calendar">
+	<table id="tribe-events-calendar" class="tribe-events-calendar">
 		<thead>
 		<tr>
 			<?php foreach ( $days_of_week as $day ) : ?>

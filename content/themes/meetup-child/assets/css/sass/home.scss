@@ -1,3 +1,31 @@
+body {
+    h1, h2, h3, h4 {
+        font-family: 'Neris';
+    }
+    //
+}
+
+body .wpum-registration-form {
+    input[type=email], input[type=password], input[type=text], input[type=tel] {
+        color: black;
+    }
+}
+
+body .btn, body .btn-meetup, body input[type=submit] {
+    background-color: #00a3e0;
+    border-color: #00a3e0 !important;
+    font-family: 'Neris';
+
+    &:hover {
+        background-color: #005EB8;
+        border-color: #005EB8 !important;
+    }
+}
+
+.speaker .image-holder img {
+    border-radius: 360px;
+}
+
 body .primary-overlay:before {
     color: white;
     content: '';
@@ -27,45 +55,71 @@ body .primary-overlay:before {
     color: #fff;
     font-size: 14px;
     margin-bottom: 32px;
-    max-width: 90%;
+    max-width: 80%;
     padding: 12px;
     padding-left: 24px;
-}
-
-.wpum-registration-form #password-strength {
-
-    width: 90%;
 }
 
 .wpum-registration-form fieldset {
     width: 50%;
     float: left;
+    height: 85px;
+    margin-top: 20px;
 }
 
 .wpum-registration-form .fieldset-last_name {
-    margin-bottom: 35px;
+//    margin-bottom: 35px;
 }
-.wpum-registration-form .fieldset-password {
-    margin-bottom: 35px;
+.wpum-registration-form .fieldset-password input {
+    width: 100%;
 }
 
 
 .wpum-registration-form fieldset label {
-    width: 18%;
+    width: 28%;
 }
 
 .wpum-registration-form fieldset div.field {
     width: 67%;
     float: left;
-    margin-left: 2em;
 }
 
 #submit_wpum_register {
     width: 30%;
     height: 52px;
-    margin: 10px 0 0 11.5%;
+    margin: 10px 0 0 16.5%;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
+input[type="password"] {
+    -moz-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    background: rgba(200,200,200,0.3);
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 32px;
+    max-width: 90%;
+    padding: 12px;
+    padding-left: 24px;
+}
+
+.wpum-helper-links {
+    float: left;
+    width: 100%;
+    margin-top: 25px;
+}
+
+#wpum_loginform {
+    width: 50%;
+    input[type=submit] {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+}
 
 /* Event List */
 .ecs-event-list {
@@ -73,29 +127,22 @@ body .primary-overlay:before {
     margin-bottom: 1.4em;
 }
 
-.home .ecs-event-list .ecs-event {
+.home .ecs-event-list {
     padding: 10px 10px;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 }
 
 .home .ecs-event-list .ecs-event h4 {
-    font-size: 1.2em;
+    font-size: 1.5em;
+    font-weight: bold;
     margin-bottom: 0;
     margin-right: 0.5em;
     display: inline-block;
-}
-.home .ecs-event-list .ecs-event h4 a:after {
-    color: black;
-    content: "-";
-    padding-left: 0.6em;
-}
 
-.home .ecs-event-list .ecs-event > p {
-    font-size: 1.2em;
-    display: inline;
-}
+    text-transform: capitalize;
 
-.home .ecs-event .tribe-event-date-start:first-letter {
-    text-transform: uppercase;
+    a {
+        color: #00a3e0;
+    }
 }

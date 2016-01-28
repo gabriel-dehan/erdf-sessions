@@ -29,7 +29,8 @@ if (isset($_POST['subscribe'])) {
   $is_subscribed = $users_events->user_subscribed($current_user, $event);
   if (!$is_subscribed) {
     $users_events->add($current_user, $event);
-    do_action( 'book_session', $current_user->email );
+    do_action( 'book_session_participant', $current_user, $event, $current_user->user_email );
+    do_action( 'book_session_responsable', $current_user, $event, get_user_meta($current_user->id, 'responsable_email', true ) );
   } else {
     echo 'You already subscribed';
   }
@@ -136,17 +137,24 @@ if (isset($_POST['subscribe'])) {
         </div>
 
         <div class="user-subscribe">
-            <?php if ( $users_events->user_subscribed($current_user, $event) ) { ?>
+            <?php if ( $current_user->ID == 0 ) { ?>
+                <a href="/register?redirect_to=<?php the_permalink(); ?>">Je m'inscris<a/>
+                <form method="GET" action="/register?redirect_to=<?php the_permalink(); ?>">
+                    <input type="hidden" name="unsubscribe">
+                    <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
+                    <button class="unsub">Je m'inscris</button>
+                </form>
+            <?php } else if ( $users_events->user_subscribed($current_user, $event) ) { ?>
                 <form method="POST" action="<?php the_permalink(); ?>">
                     <input type="hidden" name="unsubscribe">
                     <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
-                    <button class="unsub">Se désinscrire</button>
+                    <button class="unsub">Je me désinscris</button>
                 </form>
             <?php } else { ?>
                 <form method="POST" action="<?php the_permalink(); ?>">
                     <input type="hidden" name="subscribe">
                     <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
-                    <button>S'inscrire</button>
+                    <button>Je m'inscris</button>
                 </form>
             <?php } ?>
 

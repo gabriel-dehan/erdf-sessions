@@ -14,4 +14,7 @@ Responsable & Gestionnaire:
 
 // USE call_user_func
 
-add_action( 'book_session', 'notify', 10 , 2 );
+// Accusé de reception demande d'inscription TO participant
+add_action( 'book_session_participant', 'notify', 10 , 3 );
+// Accusé de reception demande de val au responsable
+add_action( 'book_session_responsable', 'notify', 10 , 3 );

@@ -12,3 +12,9 @@ function admin_scripts() {
 }
 
 add_action( 'admin_enqueue_scripts', 'admin_scripts' );
+
+function front_scripts() {
+   wp_enqueue_script( 'home-calendar', get_stylesheet_directory_uri() . '/assets/js/home-calendar.js', array( 'jquery' ) );
+}
+
+add_action( 'wp_enqueue_scripts', 'front_scripts' );

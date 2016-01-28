@@ -104,7 +104,7 @@ class ES_DB_Fields extends WPUM_DB_Fields {
 				'group_id'             => $primary_group->id,
 				'type'                 => 'text',
 				'name'                 => 'Direction appartenance',
-				'is_required'          => false,
+				'is_required'          => true,
 				'show_on_registration' => true,
 				'can_delete'           => true,
 				'meta'                 => 'direction_appartenance',
