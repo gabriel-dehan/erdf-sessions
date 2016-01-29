@@ -23,8 +23,12 @@ $users_count  = count($users);
 $spots        = es_event_get_spots($event);
 $spots_left   = $spots - $users_count;
 
-if (isset($_POST['subscribe'])) {
-  $event = get_post($_POST['event_id']);
+if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
+  if (isset($_GET['subscribe']) ) {
+    $event = get_post($_GET['event_id']);
+  } else {
+    $event = get_post($_POST['event_id']);
+  }
 
   $is_subscribed = $users_events->user_subscribed($current_user, $event);
   if (!$is_subscribed) {
@@ -138,12 +142,7 @@ if (isset($_POST['subscribe'])) {
 
         <div class="user-subscribe">
             <?php if ( $current_user->ID == 0 ) { ?>
-                <a href="/register?redirect_to=<?php the_permalink(); ?>">Je m'inscris<a/>
-                <form method="GET" action="/register?redirect_to=<?php the_permalink(); ?>">
-                    <input type="hidden" name="unsubscribe">
-                    <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
-                    <button class="unsub">Je m'inscris</button>
-                </form>
+                <a href="/register?&subscribe=1&event_id=3&retain_params=1">Je m'inscris<a/>
             <?php } else if ( $users_events->user_subscribed($current_user, $event) ) { ?>
                 <form method="POST" action="<?php the_permalink(); ?>">
                     <input type="hidden" name="unsubscribe">
