@@ -119,7 +119,8 @@ class ES_DB_UsersEvents {
     global $wpdb;
 
     // Minus 2 because 2 are the waiting list
-    $spots_limit = get_post_meta($event->ID, 'event_spots_limit', true) - 2;
+    $wait_list_spots = 2;
+    $spots_limit = get_post_meta($event->ID, 'event_spots_limit', true) - $wait_list_spots;
     $onboard_users = count($this->fetch_subscriptions($event, 'onboard'));
     $onlist_users = count($this->fetch_subscriptions($event, 'onlist'));
 
@@ -132,7 +133,7 @@ class ES_DB_UsersEvents {
 
     $column_formats = $this->get_columns();
 
-    if ($spots_limit <= ($onboard_users + $onlist_users)) {
+    if (($spots_limit + $wait_list_spots) <= ($onboard_users + $onlist_users)) {
       return array(
         "error" => 'event_full'
       );
@@ -143,14 +144,12 @@ class ES_DB_UsersEvents {
       $data = array(
         "time" => date('Y-m-d H:i:s'),
         "event_id" => $event->ID,
-        "user_id" => $user->ID,
-        "status"  => 'onlist'
-
-        $wpdb->insert( $this->table_name, $data, $column_formats);
-        return array(
+        "user_id" => $user->ID
+        //"status"  => 'onlist'
+      );
+      $wpdb->insert( $this->table_name, $data, $column_formats);
+      return array(
           "notice" => 'on_wait_list'
-        );
-
       );
     } else {
       $data = array(
@@ -195,16 +194,18 @@ class ES_DB_UsersEvents {
     global $wpdb;
 
     $current_status = $this->user_status($user, $event);
+
+    // If a someone is rejected for any reason, a new user takes his place
     if ($current_status == "onboard" && $new_status == "rejected") {
+        $users = $this->get_users($event, 'onlist');
+        $this->update_user_status($users[0], $event, 'onboard');
       // get user
     }
 
     return $wpdb->update( $this->table_name, array('status' => $new_status),
-                         array( 'user_id' => $user_id ),
-                         array( 'event_id' => $event_id ),
-                         array('%s'),
-                         array( '%d' ));
-
+                         array( 'user_id' => $user->ID, 'event_id' => $event->ID ),
+                         array('%s' ),
+                         array( '%d', '%d' ));
   }
 	/**
 	 * Create the table

@@ -2,6 +2,13 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #. Text in function
 #: Meetup-WordPress-Theme-master/comments.php:23
@@ -31,7 +38,7 @@ msgstr ""
 #. Text in function
 #: Meetup-WordPress-Theme-master/admin/theme_functions.php:1
 msgid "Back To Top"
-msgstr ""
+msgstr "Retourner en haut de page"
 
 #. Text in function
 #: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
@@ -90,7 +97,9 @@ msgstr ""
 
 #. Text in function
 #: Meetup-WordPress-Theme-master/admin/theme_functions.php:70
-msgid "If this & column 1 & column 2 & column 3 are set, your footer will be 4 columns."
+msgid ""
+"If this & column 1 & column 2 & column 3 are set, your footer will be 4 "
+"columns."
 msgstr ""
 
 #. Text in function

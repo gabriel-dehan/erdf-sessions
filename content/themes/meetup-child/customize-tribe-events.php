@@ -11,6 +11,17 @@ function es_status_to_sentence($status) {
   return $map[$status];
 }
 
+function es_admin_status_to_sentence($status) {
+  $map = array(
+    "pending" => "En attente de validation responsable",
+    "onboard" => "Participants confirmés",
+    "onlist"  => "Sur liste d'attente",
+    "rejected" => "Participations refusées"
+  );
+
+  return $map[$status];
+}
+
 
 
 add_action('save_post', 'save_spots_limit');
@@ -94,8 +105,8 @@ function es_admin_participants($event_id) {
     <tbody>
         <tr>
             <td>
-                <?php es_render_subscription_admin_for("pending", $users); ?>
                 <?php es_render_subscription_admin_for("onboard", $users); ?>
+                <?php es_render_subscription_admin_for("pending", $users); ?>
                 <?php es_render_subscription_admin_for("onlist", $users); ?>
                 <?php es_render_subscription_admin_for("rejected", $users); ?>
             </td>
@@ -107,7 +118,7 @@ function es_admin_participants($event_id) {
 
 function es_render_subscription_admin_for($status, $users) {
 ?>
-    <h3 class="title"><?php echo es_status_to_sentence($status); ?></h3>
+    <h3 class="title"><?php echo es_admin_status_to_sentence($status); ?></h3>
     <?php if (count($users[$status]) > 0) { ?>
         <table class="participants-table">
             <thead>
