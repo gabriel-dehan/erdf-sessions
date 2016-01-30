@@ -97,3 +97,10 @@ function wpum_redirect_after_login( $user_id, $values ) {
 }
 
 add_action( 'wp_login', 'wpum_redirect_after_login', 10, 2 );
+
+add_action('wp_logout','go_home');
+
+function go_home(){
+    wp_redirect( home_url() );
+    exit();
+}

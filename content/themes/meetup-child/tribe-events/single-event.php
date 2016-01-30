@@ -49,11 +49,12 @@ if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
   }
 }
 
-  $events_label_singular = tribe_get_event_label_singular();
-  $events_label_plural = tribe_get_event_label_plural();
+$events_label_singular = tribe_get_event_label_singular();
+$events_label_plural = tribe_get_event_label_plural();
 
-  $event_id = get_the_ID();
-
+$event_id = get_the_ID();
+$event_start_date = get_post_meta($event_id, '_EventStartDate', true);
+$event_passed = (new DateTime() >= new DateTime($event_start_date));
 ?>
 
 <div id="tribe-events-content" class="tribe-events-single">
@@ -89,20 +90,26 @@ if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
 			<?php tribe_get_template_part( 'modules/meta' ); ?>
 			<?php do_action( 'tribe_events_single_event_after_the_meta' ) ?>
 	      <!-- Notices -->
-	      <?php tribe_the_notices() ?>
+	      <?php /*tribe_the_notices()*/ ?>
 
-        <?php if ( !$users_events->user_subscribed($current_user, $event) && $spots_left > 0 ) { ?>
+        <?php if ( $event_passed ) { ?>
+            <form method="POST" action="<?php the_permalink(); ?>" class="btn-book-event-big">
+                <button class="btn disabled" disabled>Cette session est passée</button>
+            </form>
+        <?php } else if ( $current_user->ID == 0 ) { ?>
+          <div class="btn-book-event-big">
+              <a href="/register?subscribe=1&event_id=<?php echo the_ID(); ?>&retain_params=1" class="btn">Réservez votre place !</a>
+          </form>
+        <?php } else if ( !$users_events->user_subscribed($current_user, $event) && $spots_left > 0 ) { ?>
         <form method="POST" action="<?php the_permalink(); ?>" class="btn-book-event-big">
             <input type="hidden" name="subscribe">
             <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
-            <button>Réservez votre place !</button>
+            <button class="btn">Réservez votre place !</button>
         </form>
         <?php } else if ( $spots_left == 0 ) { ?>
-        <form method="POST" action="<?php the_permalink(); ?>" class="btn-book-event-big">
-            <input type="hidden" name="subscribe">
-            <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
-            <button class="disabled" disabled>Complet</button>
-        </form>
+            <form method="POST" action="<?php the_permalink(); ?>" class="btn-book-event-big">
+                <button class="btn disabled" disabled>Complet</button>
+            </form>
         <?php } ?>
 			<!-- Event content -->
 			<?php do_action( 'tribe_events_single_event_before_the_content' ) ?>
@@ -117,7 +124,7 @@ if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
         <div class="tribe-event-participants">
             <h2>Participants</h2>
             <div class="show-spots-left">
-                <?php if ( $spots_left > 0 ) { ?>
+                <?php if ( $spots_left > 0 && !$event_passed ) { ?>
                     <?php echo $spots_left ?> <?php echo $spots_left > 1 ? 'places restantes' : 'place restante' ?>.
                 <?php }  ?>
             </div>
@@ -135,14 +142,16 @@ if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
         </div>
 
         <div class="user-status">
-            <?php if ( $users_events->user_subscribed($current_user, $event) ) { ?>
+            <?php if ( !$event_passed && $current_user->ID != 0 && $users_events->user_subscribed($current_user, $event) ) { ?>
                 Votre statut pour cette session: <span class='status'><?php echo es_status_to_sentence($users_events->user_status($current_user, $event)); ?></span>
             <?php } ?>
         </div>
 
         <div class="user-subscribe">
-            <?php if ( $current_user->ID == 0 ) { ?>
-                <a href="/register?&subscribe=1&event_id=3&retain_params=1">Je m'inscris<a/>
+            <?php if ( $event_passed ) { ?>
+                <div></div>
+            <?php } else if ( $current_user->ID == 0 ) { ?>
+                <a href="/register?subscribe=1&event_id=<?php echo the_ID(); ?>&retain_params=1">Je m'inscris</a>
             <?php } else if ( $users_events->user_subscribed($current_user, $event) ) { ?>
                 <form method="POST" action="<?php the_permalink(); ?>">
                     <input type="hidden" name="unsubscribe">

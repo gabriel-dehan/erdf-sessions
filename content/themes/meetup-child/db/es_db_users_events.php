@@ -49,18 +49,18 @@ class ES_DB_UsersEvents {
     $users_events = $wpdb->get_results($query . $close_query);
 
     $users = array_map(function($user) {
-        global $wpdb;
-        // We want to return users not users_events so we change the ID to the user_id
-        $user->ID = $user->id = $user->user_id;
+      global $wpdb;
+      // We want to return users not users_events so we change the ID to the user_id
+      $user->ID = $user->id = $user->user_id;
 
-        $meta = $wpdb->get_results('SELECT * FROM wp_usermeta WHERE user_id = ' . $user->id . ';');
+      $meta = $wpdb->get_results('SELECT * FROM wp_usermeta WHERE user_id = ' . $user->id . ';');
 
-        // Populate with meta data
-        foreach($meta as $info) {
-            $user->{$info->meta_key} = $info->meta_value;
-        }
+      // Populate with meta data
+      foreach($meta as $info) {
+        $user->{$info->meta_key} = $info->meta_value;
+      }
 
-        return $user;
+      return $user;
     }, $users_events);
 
     return $users;
@@ -104,8 +104,24 @@ class ES_DB_UsersEvents {
     return $wpdb->get_results("SELECT * FROM " . $this->table_name . " WHERE user_id = " . $user->ID . " AND event_id = " . $event->ID . ";");
   }
 
+  public function fetch_subscriptions($event, $status) {
+    global $wpdb;
+
+    if ( empty($event->ID) || !is_numeric($event->ID) ) {
+      return false;
+    }
+
+    return $wpdb->get_results("SELECT * FROM " . $this->table_name . " WHERE event_id = " . $event->ID . " AND status = '" . $status . "';");
+  }
+
+  /* ADD */
 	public function add($user, $event) {
     global $wpdb;
+
+    // Minus 2 because 2 are the waiting list
+    $spots_limit = get_post_meta($event->ID, 'event_spots_limit', true) - 2;
+    $onboard_users = count($this->fetch_subscriptions($event, 'onboard'));
+    $onlist_users = count($this->fetch_subscriptions($event, 'onlist'));
 
     if ( empty($user->ID) || !is_numeric($user->ID) ) {
       return false;
@@ -115,14 +131,40 @@ class ES_DB_UsersEvents {
     }
 
     $column_formats = $this->get_columns();
-    $data = array(
-      "time" => date('Y-m-d H:i:s'),
-      "event_id" => $event->ID,
-      "user_id" => $user->ID
-    );
 
-    $wpdb->insert( $this->table_name, $data, $column_formats);
+    if ($spots_limit <= ($onboard_users + $onlist_users)) {
+      return array(
+        "error" => 'event_full'
+      );
+    }
+
+    // If the event is already full, put on waiting list
+    if ($spots_limit >= $onboard_users) {
+      $data = array(
+        "time" => date('Y-m-d H:i:s'),
+        "event_id" => $event->ID,
+        "user_id" => $user->ID,
+        "status"  => 'onlist'
+
+        $wpdb->insert( $this->table_name, $data, $column_formats);
+        return array(
+          "notice" => 'on_wait_list'
+        );
+
+      );
+    } else {
+      $data = array(
+        "time" => date('Y-m-d H:i:s'),
+        "event_id" => $event->ID,
+        "user_id" => $user->ID
+      );
+
+      $wpdb->insert( $this->table_name, $data, $column_formats);
+      return true;
+    }
+
 	}
+
 
 	public function remove($user, $event) {
     global $wpdb;
@@ -149,15 +191,21 @@ class ES_DB_UsersEvents {
 	}
 
 
-    public function update_user_status($user_id, $status) {
-        global $wpdb;
+  public function update_user_status($user, $event, $new_status) {
+    global $wpdb;
 
-        return $wpdb->update('wp_users_events', array('status' => $status),
-                    array( 'user_id' => $user_id ),
-                    array('%s'),
-                    array( '%d' ));
-
+    $current_status = $this->user_status($user, $event);
+    if ($current_status == "onboard" && $new_status == "rejected") {
+      // get user
     }
+
+    return $wpdb->update( $this->table_name, array('status' => $new_status),
+                         array( 'user_id' => $user_id ),
+                         array( 'event_id' => $event_id ),
+                         array('%s'),
+                         array( '%d' ));
+
+  }
 	/**
 	 * Create the table
 	 */

@@ -44,7 +44,11 @@ function es_participants_limit($id) {
         <tbody>
             <tr>
                 <td>
-							      <input autocomplete="off" type="number" name="EventSpotsLimit" id="EventSpotsLimit" value="<?php echo $meta["event_spots_limit"][0]; ?>" />
+							      <input min="3" autocomplete="off" type="number" name="EventSpotsLimit" id="EventSpotsLimit" value="<?php echo $meta["event_spots_limit"][0]; ?>" />
+                    <br><br>
+                    <p>
+                        Sur ces <span class="event-spot-limit-value">3</span> places, <strong>2</strong> sont réservées à la <strong>liste d'attente</strong>.
+                    </p>
                 </td>
             </tr>
         </tbody>
@@ -56,23 +60,24 @@ add_action( 'tribe_events_detail_top', 'es_participants_limit' );
 
 add_action( 'tribe_after_location_details', 'es_admin_participants' );
 
-function es_admin_participants($id) {
-  if (isset($_POST['subscribe-action'])) {
-    global $wpdb;
-    $users_events = new ES_DB_UsersEvents;
-
-    $action  = $_POST['subscribe-action'];
-    $user_id = $_POST['subscribe-user-id'];
-
-    $users_events->update_user_status($user_id, $action);
-  }
-
-  $is_new = $id == 0;
+function es_admin_participants($event_id) {
+  $is_new = $event_id == 0;
 
   if (!$is_new) {
     $users_events = new ES_DB_UsersEvents;
     $event     = new stdClass;
-    $event->ID = $id;
+    $event->ID = $event_id;
+
+    if (isset($_POST['subscribe-action'])) {
+      global $wpdb;
+      $users_events = new ES_DB_UsersEvents;
+
+      $action  = $_POST['subscribe-action'];
+      $user      = new stdClass;
+      $user->ID  = $_POST['subscribe-user-id'];
+
+      $users_events->update_user_status($user, $event, $action);
+    }
 
     $users = $users_events->get_users_grouped_by_status($event);
   }
