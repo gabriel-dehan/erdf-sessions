@@ -133,6 +133,7 @@ class ES_DB_UsersEvents {
 
     $column_formats = $this->get_columns();
 
+    //hd($spots_limit, $wait_list_spots, $onboard_users, $onlist_users);
     if (($spots_limit + $wait_list_spots) <= ($onboard_users + $onlist_users)) {
       return array(
         "error" => 'event_full'
@@ -140,7 +141,7 @@ class ES_DB_UsersEvents {
     }
 
     // If the event is already full, put on waiting list
-    if ($spots_limit >= $onboard_users) {
+    if ($spots_limit <= $onboard_users) {
       $data = array(
         "time" => date('Y-m-d H:i:s'),
         "event_id" => $event->ID,

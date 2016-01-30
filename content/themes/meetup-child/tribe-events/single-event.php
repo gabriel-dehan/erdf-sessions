@@ -35,21 +35,24 @@ if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
   }
 
   $is_subscribed = $users_events->user_subscribed($current_user, $event);
+
   if (!$is_subscribed) {
     $response = $users_events->add($current_user, $event);
 
     if ($response === true) {
       do_action( 'book_session_participant', $current_user, $event, $current_user->user_email );
       do_action( 'book_session_responsable', $current_user, $event, get_user_meta($current_user->id, 'responsable_email', true ) );
+      do_action( 'book_session_admin', $current_user, $event, get_option( 'admin_email' ) );
     } else {
       if ( array_key_exists('error', $response) ) {
-        print('error');
+        print_R($response);
         // Modal
       } else if ( array_key_exists('notice', $response) ) {
         do_action( 'book_session_participant', $current_user, $event, $current_user->user_email );
         do_action( 'book_session_responsable', $current_user, $event, get_user_meta($current_user->id, 'responsable_email', true ) );
+        do_action( 'book_session_admin', $current_user, $event, get_option( 'admin_email' ) );
 
-        print('notice');
+        print_R($response);
         // Modal
       }
     }
@@ -74,6 +77,7 @@ $events_label_plural = tribe_get_event_label_plural();
 $event_id = get_the_ID();
 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
 $event_passed = (new DateTime() >= new DateTime($event_start_date));
+hd(get_post_meta($event_id));
 ?>
 
 <div id="tribe-events-content" class="tribe-events-single">

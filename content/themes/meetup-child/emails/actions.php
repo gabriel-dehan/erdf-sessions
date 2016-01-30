@@ -18,3 +18,4 @@ Responsable & Gestionnaire:
 add_action( 'book_session_participant', 'notify', 10 , 3 );
 // Accusé de reception demande de val au responsable
 add_action( 'book_session_responsable', 'notify', 10 , 3 );
+add_action( 'book_session_admin', 'notify', 10 , 3 );
