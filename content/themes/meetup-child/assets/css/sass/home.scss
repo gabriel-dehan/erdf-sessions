@@ -38,6 +38,10 @@ body .primary-overlay:before {
     background-color: #C3D3AB !important;
 }
 
+.home .vc_row-fluid {
+    padding: 50px 0;
+}
+
 .wpb_content_element .widgettitle {
     margin-bottom: 0.8em;
 }
@@ -121,10 +125,49 @@ input[type="password"] {
     }
 }
 
+.tribe-header-nav .tribe-events-sub-nav {
+    background: #515151;
+    margin: 0 0 -14px 0 !important;
+    border-bottom: 1px solid #8f8c8c;
+    padding: 12px 30px !important;
+
+    .tribe-events-nav-previous {
+        text-align: left;
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        border-bottom: none;
+    }
+
+    & > p {
+        display: inline;
+    }
+
+    .tribe-events-nav-next {
+        float: right;
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        border-bottom: none;
+    }
+
+    a {
+        color: white;
+        font-size: 1.1em;
+        text-transform: capitalize;
+
+        &:hover {
+            color: #00a3e0;
+        }
+    }
+}
+
 /* Event List */
 .ecs-event-list {
-    margin-top: 2em;
-    margin-bottom: 1.4em;
+    text-align: center;
+    font-size: 2em;
+    margin-top: 1em;
+    margin-bottom: 10px;
 }
 
 .home .ecs-event-list {

@@ -77,7 +77,7 @@ $events_label_plural = tribe_get_event_label_plural();
 $event_id = get_the_ID();
 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
 $event_passed = (new DateTime() >= new DateTime($event_start_date));
-hd(get_post_meta($event_id));
+//hd(get_post_meta($event_id));
 ?>
 
 <div id="tribe-events-content" class="tribe-events-single">
@@ -137,15 +137,15 @@ hd(get_post_meta($event_id));
 			<!-- Event content -->
 			<?php do_action( 'tribe_events_single_event_before_the_content' ) ?>
 			<!-- .tribe-events-single-event-description -->
-        <div class="tribe-event-program">
+        <!--div class="tribe-event-program">
             <h2>Programme</h2>
 			      <div class="tribe-events-single-event-description tribe-events-content">
 				        <?php the_content(); ?>
 			      </div>
-        </div>
+        </div-->
 
         <div class="tribe-event-participants">
-            <h2>Participants</h2>
+            <h2>Participants confirmés</h2>
             <div class="show-spots-left">
                 <?php if ( $spots_left > 0 && !$event_passed ) { ?>
                     <?php echo $spots_left ?> <?php echo $spots_left > 1 ? 'places restantes' : 'place restante' ?>.
@@ -161,7 +161,7 @@ hd(get_post_meta($event_id));
                         <?php } ?>
                     </ul>
                 <?php } else { ?>
-                    <span class="none">Aucun participant.</span>
+                    <span class="none">Aucune inscription n'a encore été confirmée.</span>
                 <?php } ?>
             </div>
         </div>
@@ -219,7 +219,7 @@ hd(get_post_meta($event_id));
 
 		<h3 class="tribe-events-visuallyhidden"><?php printf( esc_html__( '%s Navigation', 'the-events-calendar' ), $events_label_singular ); ?></h3>
 		<ul class="tribe-events-sub-nav">
-			<li class="tribe-events-nav-previous"><?php tribe_the_prev_event_link( '<span>&laquo;</span> Date précédente' ) ?></li>
+			<!--li class="tribe-events-nav-previous"><?php tribe_the_prev_event_link( '<span>&laquo;</span> Date précédente' ) ?></li-->
 			<li class="tribe-events-nav-next"><?php tribe_the_next_event_link( 'Date suivante <span>&raquo;</span>' ) ?></li>
 		</ul>
 		<!-- .tribe-events-sub-nav -->
