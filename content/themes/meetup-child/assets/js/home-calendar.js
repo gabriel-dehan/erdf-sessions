@@ -1,3 +1,4 @@
+
 if (!$) {
   var $ = jQuery;
 }
@@ -9,4 +10,9 @@ $(function() {
   var text = $(".ecs-event a").text();
   $(".ecs-event a").text(text.replace(/de .*/, ''));
   $(".ecs-event p").hide();
+
+  // Hide them all
+  $(".speaker-description .text-link").hide();
+  // Only display when there actually is a description
+  $(".speaker-description p + .text-link").show().text("Lire la suite");
 });

@@ -36,10 +36,11 @@
 			<div class="col-sm-8">
 				<div class="article-body">
 					<?php
-						the_title('<p>'. $job .'</p><h1>','</h1>');
+						the_title('<h1>','</h1><p><strong>'. $job .'</strong></p>');
 						the_content();
 						wp_link_pages();
 					?>
+          <a class='text-link' href="<?php echo home_url(); ?>">Retour à l'accueil</a>
 				</div><!--end of article snippet-->
 			</div>
 
@@ -48,4 +49,4 @@
 </section>
 
 <?php
-get_footer();
+	get_footer();

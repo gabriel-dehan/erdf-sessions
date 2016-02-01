@@ -1,5 +1,13 @@
 #tribe-events-content {
 
+    .tribe-events-tooltip {
+        text-align: center;
+
+        &:first-letter {
+            text-transform: uppercase;
+        }
+    }
+
     .tribe-events-month-event-title .users-count {
         font-family: Neris;
         font-weight: normal;

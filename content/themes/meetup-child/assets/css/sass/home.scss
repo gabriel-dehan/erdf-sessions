@@ -41,6 +41,14 @@ body .btn, body .btn.btn-meetup, body input[type=submit] {
 .speaker .image-holder img {
     border-radius: 360px;
 }
+.speaker, .speaker-description {
+    .hover-state {
+        display: none;
+    }
+    & > span {
+        width: 100%;
+    }
+}
 
 body .primary-overlay:before {
     color: white;
