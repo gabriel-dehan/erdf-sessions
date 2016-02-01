@@ -203,10 +203,18 @@ class ES_DB_UsersEvents {
       // get user
     }
 
-    return $wpdb->update( $this->table_name, array('status' => $new_status),
+    $update_ok = $wpdb->update( $this->table_name, array('status' => $new_status),
                          array( 'user_id' => $user->ID, 'event_id' => $event->ID ),
                          array('%s' ),
                          array( '%d', '%d' ));
+
+    if ($update_ok !== false) {
+      do_action( 'book_confirmed_participant', $user, $event, $current_user->user_email );
+      do_action( 'book_confirmed_responsable', $user, $event, get_user_meta($user->ID, 'responsable_email', true ) );
+      do_action( 'book_confirmed_admin', $user, $event, get_option( 'admin_email' ) );
+    }
+
+    return $update_ok;
   }
 	/**
 	 * Create the table

@@ -19,3 +19,11 @@ add_action( 'book_session_participant', 'notify', 10 , 3 );
 // Accusé de reception demande de val au responsable
 add_action( 'book_session_responsable', 'notify', 10 , 3 );
 add_action( 'book_session_admin', 'notify', 10 , 3 );
+
+// Validation d'un user par l'admin
+add_action( 'book_confirmed_participant', 'notify', 10 , 3 );
+add_action( 'book_confirmed_responsable', 'notify', 10 , 3 );
+add_action( 'book_confirmed_admin', 'notify', 10 , 3 );
+
+// Refus d'un user par l'admin
+add_action( 'book_refused_participant', 'notify_cc_admin', 10 , 3 );

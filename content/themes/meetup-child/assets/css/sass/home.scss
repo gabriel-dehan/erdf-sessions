@@ -2,7 +2,12 @@ body {
     h1, h2, h3, h4 {
         font-family: 'Neris';
     }
+
     //
+}
+
+body nav .logo {
+    top: -17px;
 }
 
 body .wpum-registration-form {
@@ -11,7 +16,7 @@ body .wpum-registration-form {
     }
 }
 
-body .btn, body .btn-meetup, body input[type=submit] {
+body .btn, body .btn.btn-meetup, body input[type=submit] {
     background-color: #00a3e0;
     border-color: #00a3e0 !important;
     font-family: 'Neris';
@@ -19,6 +24,17 @@ body .btn, body .btn-meetup, body input[type=submit] {
     &:hover {
         background-color: #005EB8;
         border-color: #005EB8 !important;
+    }
+}
+
+.home .btn.btn-meetup {
+    background-color: #48A23F;
+    border-color: #48A23F !important;
+    font-size: 1.2em;
+
+    &:hover {
+        background-color: #CCE821;
+        border-color: #CCE821 !important;
     }
 }
 
@@ -38,10 +54,45 @@ body .primary-overlay:before {
     background-color: #C3D3AB !important;
 }
 
-.home .vc_row-fluid {
-    padding: 50px 0;
+.home {
+    h1, h2 {
+        color: #005EB8;
+    }
+    .wpb_video_widget {
+        margin-top: 9px;
+    }
+
+    .vc_row-fluid {
+        padding: 50px 0;
+    }
+
+    .justified {
+        text-align: justify;
+        padding-right: 55px;
+    }
+
+    .wpb_wrapper .justified {
+        padding-right: 40px;
+    }
+
+
+    .programme {
+        margin-top: 17px;
+    }
+
+    .schedule-overview {
+        .schedule-title {
+            padding-right: 25px;
+        }
+
+        .middle {
+            background-color: #48A23F;
+        }
+    }
+
 }
 
+.home
 .wpb_content_element .widgettitle {
     margin-bottom: 0.8em;
 }
