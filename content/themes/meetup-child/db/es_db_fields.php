@@ -102,6 +102,15 @@ class ES_DB_Fields extends WPUM_DB_Fields {
 			),
 			array(
 				'group_id'             => $primary_group->id,
+				'type'                 => 'email',
+				'name'                 => 'Email professionnel',
+				'is_required'          => true,
+				'show_on_registration' => true,
+				'can_delete'           => true,
+				'meta'                 => 'email_pro',
+			),
+			array(
+				'group_id'             => $primary_group->id,
 				'type'                 => 'text',
 				'name'                 => 'Direction appartenance',
 				'is_required'          => true,

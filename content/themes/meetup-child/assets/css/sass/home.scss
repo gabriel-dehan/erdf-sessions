@@ -109,6 +109,13 @@ body .primary-overlay:before {
     /*margin-top: 2em;*/
 }
 
+#wpum-form-wpum_loginform {
+    input[type=text], input[type=password], input[type=email] {
+        color: black;
+    }
+}
+
+
 .wpum-registration-form input {
     transition: all .3s ease-out;
     -webkit-transition: all .3s ease-out;
@@ -150,7 +157,7 @@ body .primary-overlay:before {
 #submit_wpum_register {
     width: 30%;
     height: 52px;
-    margin: 10px 0 0 16.5%;
+    margin: 10px 0 45px 14.5%;
     font-size: 1.2em;
     font-weight: bold;
 }

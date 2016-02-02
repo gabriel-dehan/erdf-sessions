@@ -25,6 +25,17 @@ function es_event_get_spots($event) {
   return ($spots > 0) ? $spots : 5;
 }
 
+add_action( 'plugins_loaded', 'myplugin_load_textdomain' );
+/**
+  * Load plugin textdomain.
+  *
+  * @since 1.0.0
+  */
+function myplugin_load_textdomain() {
+    load_plugin_textdomain( 'the-events-calendar', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+}
+
+
 /*
  * Possible solution for Single Event page 404 errors where the WP_Query has an attachment set
  * IMPORTANT: Flush permalinks after pasting this code: http://tri.be/support/documentation/troubleshooting-404-errors/
