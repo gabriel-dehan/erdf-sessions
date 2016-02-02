@@ -22,13 +22,15 @@ global $post;
  * $post global referencing something other than the event we're interested
  * in.
  */
-$day      = tribe_events_get_current_month_day();
-$event_id = "{$post->ID}-{$day['daynum']}";
-$link     = tribe_get_event_link( $post );
-$title    = get_the_title( $post );
-$users    = es_event_find_users($post);
-$spots    = es_event_get_spots($post);
-$users_count = count($users);
+$users_events = new ES_DB_UsersEvents;
+$day       = tribe_events_get_current_month_day();
+$event_id  = "{$post->ID}-{$day['daynum']}";
+$link      = tribe_get_event_link( $post );
+$title     = get_the_title( $post );
+$users     = es_event_find_users($post);
+$spots     = es_event_get_spots($post);
+$onlist_count = count($users_events->get_users($post, "onlist"));
+$users_count  = count($users);
 
 /**
  * How to Use the Javascript Templating System in this View
@@ -197,14 +199,22 @@ $users_count = count($users);
 
 <div id="tribe-events-event-<?php echo esc_attr( $event_id ); ?>" class="<?php tribe_events_event_classes() ?>" data-tribejson='<?php echo esc_attr( tribe_events_template_data( $post ) ); ?>'>
 	<h3 class="tribe-events-month-event-title">
-      <span class="users-count <?php echo (($spots - $users_count - 2) == 0) ? 'disabled' : ''; ?> ">
-          Places restantes: <span class="num"><?php echo $spots - $users_count - 2 ?></span>
-      </span>
-      <?php if ( ($spots - $users_count - 2) == 0 ) { ?>
+      <?php $remaining = $spots - $users_count - $onlist_count; ?>
+      <?php if ( ($spots - $users_count) <= 0 && $onlist_count <= 0 ){ ?>
+          <a href="<?php echo esc_url( $link ) ?>" class="url disabled book-event">
+              Complet
+          </a>
+          <a href="<?php echo esc_url( $link ) ?>" class="url book-event">
+              Me mettre sur liste d'attente
+          </a>
+      <?php } else if ( $remaining <= 0 ) { ?>
           <a href="<?php echo esc_url( $link ) ?>" class="url disabled book-event">
               Complet
           </a>
       <?php } else { ?>
+          <span class="users-count <?php echo $remaining <= 0 ? 'disabled' : ''; ?> ">
+              Places restantes: <span class="num"><?php echo $spots - $users_count ?></span>
+          </span>
           <a href="<?php echo esc_url( $link ) ?>" class="url book-event">
               Réserver
           </a>

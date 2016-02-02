@@ -24,7 +24,7 @@ function book_refused_participant_template($user, $event, $email) {
 </p>
 
 <p>
-    Pour choisir une autre session, <a href="">cliquez ici</a>.
+    Pour choisir une autre session, <a href="<?php echo home_url() . "/events" ?>">cliquez ici</a>.
 <p>
 <p>
     Cordialement,

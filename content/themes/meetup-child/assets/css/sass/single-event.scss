@@ -51,10 +51,11 @@
         margin: 40px 0 40px 0;
 
         .show-spots-left {
-            font-size: 1.2em;
-            padding-left: 15px;
+            font-size: 1.4em;
+            padding-left: 5px;
             margin-bottom: 15px;
             color: #E03E52;
+
         }
 
         .show-participants .none {
@@ -68,11 +69,21 @@
             li {
                 color: #005EB8;
                 list-style: none;
-                border-bottom: 1px solid lightblue;
+                border-bottom: 1px solid #DFE6E8;
                 padding: 10px 15px;
+
+                .user-name {
+                    display: inline-block;
+                    font-weight: bold;
+                }
+
+                .service {
+                    display: inline-block;
+                    margin-left: 3em;
+                }
             }
             li:last-child {
-                border-bottom: 1px solid #EBFAFF;
+                border-bottom: 1px solid #DFE6E8;
 
             }
 
@@ -81,7 +92,7 @@
     }
 
     .user-status {
-        font-size: 1.1em;
+        font-size: 1.4em;
         margin-bottom: 20px;
 
         .status {
@@ -95,7 +106,7 @@
     .user-subscribe button, .user-subscribe a {
         border: none;
 
-        font-family: 'Neris';
+/*        font-family: 'Neris';
         font-size: 1.2em;
         font-weight: bold;
 
@@ -105,15 +116,11 @@
         display: block;
 
         margin-bottom: 25px;
-        padding: 7px 18px;
-
+        //padding: 7px 18px;
+*/
         &.unsub {
             background: #E03E52;
         }
-    }
-
-    .user-subscribe a {
-        display: inline-block;
     }
 
 }
@@ -141,6 +148,12 @@
         &.disabled {
             background: #E03E52;
         }
+    }
+    .btn-big {
+        width: 390px;
+    }
+    .btn-huge {
+        width: 480px;
     }
 }
 

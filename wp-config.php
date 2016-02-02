@@ -43,6 +43,8 @@ if (!defined('DB_COLLATE')) {
 	define('DB_COLLATE', '');
 }
 
+//define('DISABLE_WP_CRON', false);
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *

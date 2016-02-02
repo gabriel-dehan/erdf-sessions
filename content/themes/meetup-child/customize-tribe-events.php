@@ -58,7 +58,7 @@ function es_participants_limit($id) {
 							      <input min="3" autocomplete="off" type="number" name="EventSpotsLimit" id="EventSpotsLimit" value="<?php echo $meta["event_spots_limit"][0]; ?>" />
                     <br><br>
                     <p>
-                        Sur ces <span class="event-spot-limit-value">3</span> places, <strong>2</strong> sont réservées à la <strong>liste d'attente</strong>.
+                        En plus de ces <span class="event-spot-limit-value">3</span> places, <strong>1</strong> place supplémentaire est réservée à la <strong>liste d'attente</strong>.
                     </p>
                 </td>
             </tr>

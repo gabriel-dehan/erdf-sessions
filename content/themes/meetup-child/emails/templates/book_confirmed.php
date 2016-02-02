@@ -12,6 +12,8 @@ function book_confirmed_participant_template($user, $event, $email) {
   $user_meta =  get_user_meta( $user->ID );
   $full_name = $user_meta["first_name"][0] . " " . $user_meta["last_name"][0];
 
+  $link = get_permalink( $event->ID );
+
   ob_start();
 ?>
 
@@ -28,7 +30,7 @@ function book_confirmed_participant_template($user, $event, $email) {
 </p>
 
 <p>
-    Toutes les informations sur votre session du <em><?php echo $date ?></em> sont disponibles <a href="">ici</a>.
+    Toutes les informations sur votre session du <em><?php echo $date; ?></em> sont disponibles <a href="<?php echo $link; ?>">ici</a>.
 <p>
 
 <p>
@@ -61,7 +63,7 @@ function book_confirmed_responsable_template($user, $event, $email) {
 ?>
 
 <p>
-    Bonjour, merci d’avoir validé la participation au stage « Communication en situation d’urgence  médiatique| Communication de crise » du <em><?php echo $date ?></em> de M/Mme <?php echo $full_name ?>.
+    Bonjour, merci d’avoir validé la participation au stage « Communication en situation d’urgence médiatique | Communication de crise » du <em><?php echo $date ?></em> de M/Mme <?php echo $full_name ?>.
 </p>
 
 <p>
@@ -83,6 +85,7 @@ function book_confirmed_admin_template($user, $event, $email) {
   $date = date_i18n("l d F Y", $event_start_date->getTimestamp());
 
   $admin_url = admin_url( 'post.php?post=' . $event->ID ) . '&action=edit';
+  $link = get_permalink( $event->ID );
 
   ob_start();
 ?>
@@ -90,7 +93,7 @@ function book_confirmed_admin_template($user, $event, $email) {
     Bonjour, nous vous informons que l'inscription de M/Mme <?php echo $full_name ?> au stage « Communication en situation d’urgence médiatique | Communication de crise » du <em><?php echo $date ?></em> a bien été validée.
 </p>
 <p>
-    Toutes les informations sur cette session sont disponibles <a href="">ici</a>.
+    Toutes les informations sur cette session sont disponibles <a href="<?php echo $link ?>">ici</a>.
 </p>
 
 <?php

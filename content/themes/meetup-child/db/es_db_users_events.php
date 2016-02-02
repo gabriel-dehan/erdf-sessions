@@ -114,15 +114,34 @@ class ES_DB_UsersEvents {
     return $wpdb->get_results("SELECT * FROM " . $this->table_name . " WHERE event_id = " . $event->ID . " AND status = '" . $status . "';");
   }
 
+  public function destroy_subscriptions($user_id) {
+    global $wpdb;
+
+    if ( empty($event->ID) || !is_numeric($event->ID) ) {
+      return false;
+    }
+
+    return $wpdb->get_results("DELETE FROM " . $this->table_name . " WHERE user_id = " . $user_id . ";");
+
+  }
+
   /* ADD */
 	public function add($user, $event) {
     global $wpdb;
 
     // Minus 2 because 2 are the waiting list
-    $wait_list_spots = 2;
-    $spots_limit = get_post_meta($event->ID, 'event_spots_limit', true) - $wait_list_spots;
+    $wait_list_spots = 1;
+    $spots_limit = get_post_meta($event->ID, 'event_spots_limit', true);
     $onboard_users = count($this->fetch_subscriptions($event, 'onboard'));
     $onlist_users = count($this->fetch_subscriptions($event, 'onlist'));
+    $upcoming_events_for_user = $wpdb->get_results(
+      "SELECT * FROM wp_users_events ue WHERE ue.event_id IN " .
+      "(SELECT p.id FROM  wp_posts p JOIN wp_postmeta m ON m.post_id = p.id " .
+      " WHERE p.post_type =  'tribe_events' AND m.meta_key = '_EventStartDate' " .
+      "AND m.meta_value > '" . date('Y-m-d H:i:s') . "') " .
+      "AND ue.user_id = " . $user->ID . ";"
+    );
+
 
     if ( empty($user->ID) || !is_numeric($user->ID) ) {
       return false;
@@ -133,7 +152,14 @@ class ES_DB_UsersEvents {
 
     $column_formats = $this->get_columns();
 
-    //hd($spots_limit, $wait_list_spots, $onboard_users, $onlist_users);
+    if (count($upcoming_events_for_user) > 0) {
+      return array(
+        "error" => 'already_subscribed_in_other_event',
+        "data"  => $upcoming_events_for_user[0]
+      );
+    }
+
+    //hd($spots_limit, $wait_list_spots, $onboard_users, $this->fetch_subscriptions($event, 'onlist'));
     if (($spots_limit + $wait_list_spots) <= ($onboard_users + $onlist_users)) {
       return array(
         "error" => 'event_full'
@@ -145,8 +171,8 @@ class ES_DB_UsersEvents {
       $data = array(
         "time" => date('Y-m-d H:i:s'),
         "event_id" => $event->ID,
-        "user_id" => $user->ID
-        //"status"  => 'onlist'
+        "user_id" => $user->ID,
+        "status"  => 'onlist'
       );
       $wpdb->insert( $this->table_name, $data, $column_formats);
       return array(
@@ -196,10 +222,12 @@ class ES_DB_UsersEvents {
 
     $current_status = $this->user_status($user, $event);
 
-    // If a someone is rejected for any reason, a new user takes his place
+    // If a someone is rejected for any reason, a new onlist user takes his place
     if ($current_status == "onboard" && $new_status == "rejected") {
-        $users = $this->get_users($event, 'onlist');
+      $users = $this->get_users($event, 'onlist');
+      if (count($users) > 0) {
         $this->update_user_status($users[0], $event, 'onboard');
+      }
       // get user
     }
 
@@ -208,10 +236,18 @@ class ES_DB_UsersEvents {
                          array('%s' ),
                          array( '%d', '%d' ));
 
-    if ($update_ok !== false) {
-      do_action( 'book_confirmed_participant', $user, $event, $current_user->user_email );
-      do_action( 'book_confirmed_responsable', $user, $event, get_user_meta($user->ID, 'responsable_email', true ) );
-      do_action( 'book_confirmed_admin', $user, $event, get_option( 'admin_email' ) );
+    // if update_ok
+    if ( $update_ok !== false ) {
+      if ( $new_status == "onboard" ) {
+        do_action( 'book_confirmed_participant', $user, $event, get_userdata( $user->ID )->user_email );
+        do_action( 'book_confirmed_responsable', $user, $event, get_user_meta($user->ID, 'responsable_email', true ) );
+        do_action( 'book_confirmed_admin', $user, $event, get_option( 'admin_email' ) );
+
+        es_schedule_emails($user, $event);
+
+      } else if ( $new_status == "rejected" ) {
+        do_action( 'book_refused_participant', $user, $event, get_userdata( $user->ID )->user_email );
+      }
     }
 
     return $update_ok;

@@ -1,6 +1,6 @@
 <?php
 function es_mail_sign() {
-    return "Mathieu Moreau";
+    return "Formation ERDF de communication en situation d'urgence médiatique";
 }
 
 foreach (glob(get_stylesheet_directory() . "/emails/templates/*.php") as $template) {
@@ -9,3 +9,4 @@ foreach (glob(get_stylesheet_directory() . "/emails/templates/*.php") as $templa
 
 require_once('actions.php');
 require_once('notify.php');
+require_once('schedule.php');

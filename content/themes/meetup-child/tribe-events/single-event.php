@@ -23,8 +23,11 @@ $users_count  = count($users);
 $onlist_count = count($users_events->get_users($event, "onlist"));
 
 $spots        = es_event_get_spots($event);
-$spots_left   = $spots - $users_count - 2;
-$onlist_left  = 2 - $onlist_count;
+
+$spots_left   = $spots - $users_count;
+$onlist_left  = 1 - $onlist_count;
+// Make sure $onlist_left is not negative
+$onlist_left  = $onlist_left < 0 ? 0 : $onlist_left;
 
 
 if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
@@ -58,7 +61,7 @@ if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
     }
 
   } else {
-    echo 'You already subscribed';
+    echo 'Vous êtes déjà inscrit à cette session.';
   }
 } else if (isset($_POST['unsubscribe'])) {
   $event = get_post($_POST['event_id']);
@@ -67,7 +70,7 @@ if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
   if ($is_subscribed) {
     $users_events->remove($current_user, $event);
   } else {
-    echo 'You are not subscribed yet';
+    echo "Vous n'êtes pas encore inscrit à cette session.";
   }
 }
 
@@ -77,7 +80,6 @@ $events_label_plural = tribe_get_event_label_plural();
 $event_id = get_the_ID();
 $event_start_date = get_post_meta($event_id, '_EventStartDate', true);
 $event_passed = (new DateTime() >= new DateTime($event_start_date));
-//hd(get_post_meta($event_id));
 ?>
 
 <div id="tribe-events-content" class="tribe-events-single">
@@ -119,20 +121,20 @@ $event_passed = (new DateTime() >= new DateTime($event_start_date));
             <form method="POST" action="<?php the_permalink(); ?>" class="btn-book-event-big">
                 <button class="btn disabled" disabled>Cette session est passée</button>
             </form>
+        <?php } else if ( $spots_left <= 0 ||  ($spots_left <= 0 && $onlist_left <= 0) ) { ?>
+            <form method="POST" action="<?php the_permalink(); ?>" class="btn-book-event-big">
+                <button class="btn disabled" disabled>Complet</button>
+            </form>
         <?php } else if ( $current_user->ID == 0 ) { ?>
           <div class="btn-book-event-big">
               <a href="/register?subscribe=1&event_id=<?php echo the_ID(); ?>&retain_params=1" class="btn">Réservez votre place !</a>
-          </form>
+          </div>
         <?php } else if ( !$users_events->user_subscribed($current_user, $event) && $spots_left > 0 ) { ?>
         <form method="POST" action="<?php the_permalink(); ?>" class="btn-book-event-big">
             <input type="hidden" name="subscribe">
             <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
             <button class="btn">Réservez votre place !</button>
         </form>
-        <?php } else if ( $spots_left <= 0 ||  ($spots_left <= 0 && $onlist_left <= 0) ) { ?>
-            <form method="POST" action="<?php the_permalink(); ?>" class="btn-book-event-big">
-                <button class="btn disabled" disabled>Complet</button>
-            </form>
         <?php } ?>
 			<!-- Event content -->
 			<?php do_action( 'tribe_events_single_event_before_the_content' ) ?>
@@ -145,19 +147,26 @@ $event_passed = (new DateTime() >= new DateTime($event_start_date));
         </div-->
 
         <div class="tribe-event-participants">
-            <h2>Participants confirmés</h2>
             <div class="show-spots-left">
                 <?php if ( $spots_left > 0 && !$event_passed ) { ?>
-                    <?php echo $spots_left ?> <?php echo $spots_left > 1 ? 'places restantes' : 'place restante' ?>.
+                    <strong><?php echo $spots_left ?></strong> <?php echo $spots_left > 1 ? 'places restantes' : 'place restante' ?>
                 <?php } else { ?>
-                    Aucune place restante.
+                    Aucune place restante
                 <?php  } ?>
             </div>
+            <h2>Participants confirmés</h2>
             <div class="show-participants">
                 <?php if (count($users) > 0) { ?>
                     <ul>
                         <?php foreach ($users as $user) { ?>
-                            <li><?php echo $user->first_name . " " . $user->last_name ?></li>
+                            <li>
+                                <span class="user-name">
+                                    <?php echo $user->first_name . " " . $user->last_name ?>
+                                </span>
+                                <span class="service">
+                                    <?php echo $user->direction_appartenance; ?>
+                                </span>
+                            </li>
                         <?php } ?>
                     </ul>
                 <?php } else { ?>
@@ -175,29 +184,33 @@ $event_passed = (new DateTime() >= new DateTime($event_start_date));
         <div class="user-subscribe">
             <?php if ( $event_passed ) { ?>
                 <div>Cet évenement est passé.</div>
-            <?php } else if ( $current_user->ID == 0 ) { ?>
-                <a href="/register?subscribe=1&event_id=<?php echo the_ID(); ?>&retain_params=1">Je m'inscris</a>
-            <?php } else if ( $users_events->user_subscribed($current_user, $event) ) { ?>
-                <form method="POST" action="<?php the_permalink(); ?>">
-                    <input type="hidden" name="unsubscribe">
-                    <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
-                    <button class="unsub">Je me désinscris</button>
-                </form>
             <?php } else if ( $spots_left <= 0 && $onlist_left <= 0 ) { ?>
                 <?php $next_event = Tribe__Events__Main::instance()->get_event_link( $event, 'next' ); ?>
                 <?php if ($next_event) { ?>
-                    <?php tribe_the_next_event_link( 'Cet évèment est complet, inscrivez vous à la prochaine session ! <span>&raquo;</span>' ) ?>
+                    <div class="btn-book-event-big">
+                        <span class="btn btn-huge"><?php tribe_the_next_event_link( 'Inscrivez vous à la prochaine session !' ) ?></span>
+                    </div>
                 <?php } else { ?>
                     <h3>Cet évènement est complet et aucune autre session n'est prévue pour l'instant.</h3>
                 <?php }  ?>
+            <?php } else if ( $current_user->ID == 0 ) { ?>
+                <div class="btn-book-event-big">
+                    <a class="btn" href="/register?subscribe=1&event_id=<?php echo the_ID(); ?>&retain_params=1">Je m'inscris</a>
+                </div>
+            <?php } else if ( $users_events->user_subscribed($current_user, $event) ) { ?>
+                <form class="btn-book-event-big" method="POST" action="<?php the_permalink(); ?>">
+                    <input type="hidden" name="unsubscribe">
+                    <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
+                    <button class="unsub btn">Je me désinscris</button>
+                </form>
             <?php } else { ?>
-                <form method="POST" action="<?php the_permalink(); ?>">
+                <form class="btn-book-event-big" method="POST" action="<?php the_permalink(); ?>">
                     <input type="hidden" name="subscribe">
                     <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
                     <?php if ( $spots_left > 0 ) { ?>
-                        <button>Je m'inscris</button>
+                        <button class="btn">Je m'inscris</button>
                     <?php } else if ( $onlist_left > 0 ) { ?>
-                        <button>Je m'inscris sur la liste d'attente</button>
+                        <button class="btn btn-big">Je m'inscris sur la liste d'attente</button>
                     <?php } ?>
                 </form>
             <?php } ?>

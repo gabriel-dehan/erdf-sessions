@@ -11,7 +11,7 @@ function notify( $user, $event, $email, $cc_admin = false ) {
     add_filter( 'wp_mail_content_type', 'set_mail_html_content_type' );
 
     if ($cc_admin) {
-        wp_mail( $email, $subject, $message, 'Cc: ' . get_option( 'admin_email' ) );
+        wp_mail( $email, $subject, $message, 'CC: <' . get_option( 'admin_email' ) . '>;');
     } else {
         wp_mail( $email, $subject, $message );
     }

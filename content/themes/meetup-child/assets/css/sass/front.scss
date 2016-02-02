@@ -3,8 +3,11 @@
 @import 'single-event.scss';
 @import 'calendar.scss';
 
-body {
-    font-family: 'Neris';
+body .show-content {
+    font-family: 'Neris', 'Calibri', 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+
+    p { font-size: 16px; }
 }
 
 .short.footer {
