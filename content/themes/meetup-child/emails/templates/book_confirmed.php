@@ -18,7 +18,8 @@ function book_confirmed_participant_template($user, $event, $email) {
 ?>
 
 <p>
-    Bonjour <?php echo $full_name ?>, et toutes nos félicitations ! Vous participerez bien au stage «Communication en situation d’urgence médiatique | communication de crise» du <em><?php echo $date ?></em>.
+  Bonjour <?php echo $full_name ?>, et toutes nos félicitations ! <br>
+  Vous participerez bien au stage «Communication en situation d’urgence médiatique | communication de crise» du <em><?php echo $date ?></em>.
 </p>
 
 <p>

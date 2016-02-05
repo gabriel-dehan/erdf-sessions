@@ -3,4 +3,5 @@ if (!$) {
 }
 
 $(function() {
+  $('.modal').modal();
 });

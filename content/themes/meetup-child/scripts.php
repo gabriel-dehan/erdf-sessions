@@ -6,7 +6,7 @@ function wpbootstrap_scripts_with_jquery()
 }
 
 add_action( 'admin_enqueue_scripts', 'wpbootstrap_scripts_with_jquery' );
-
+add_action( 'wp_enqueue_scripts', 'wpbootstrap_scripts_with_jquery' );
 function admin_scripts() {
     wp_enqueue_script( 'single-event-admin', get_stylesheet_directory_uri() . '/assets/js/single-event-admin.js', array( 'jquery' ) );
 }

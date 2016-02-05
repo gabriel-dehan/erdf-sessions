@@ -3,15 +3,53 @@
 @import 'single-event.scss';
 @import 'calendar.scss';
 
+.home {
+    font-size: 16px;
+}
+
+.nav-container {
+    .overlay-nav.sticky-nav {
+        background: rgba(255,255,255,0.9);
+        .bottom-border {
+            display: block;
+            opacity: 0.4;
+            bottom: 0;
+            background: #005EB8;
+        }
+
+    }
+}
 body .show-content {
     font-family: 'Neris', 'Calibri', 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 16px;
 
     p { font-size: 16px; }
 }
 
+.modal .modal-dialog {
+    margin-top: 97px;
+    //top: 67px;
+}
+
+.modal .modal-body {
+    padding-bottom: 0;
+}
+
+.modal .modal-footer {
+    padding-bottom: 0;
+    padding-top: 15px;
+}
+
 .short.footer {
     background: #75787B;
+
+    .menu li {
+        top: 0px;
+        font-size: 0.8em;
+
+        .back-to-top {
+            display: none;
+        }
+    }
 }
 
 .spinner {

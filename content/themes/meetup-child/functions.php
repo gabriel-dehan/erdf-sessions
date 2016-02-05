@@ -32,6 +32,27 @@ function es_delete_user_subscriptions($user_id) {
 
 add_action( 'delete_user', 'es_delete_user_subscriptions' );
 
+function display_modal($text) {
+
+    ?>
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-body">
+                    <h3>
+                        <?php echo $text; ?>
+                    </h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <?php
+}
 //hd( _get_cron_array() );die;
 
 //wp_clear_scheduled_hook('reminder_week_earlier');

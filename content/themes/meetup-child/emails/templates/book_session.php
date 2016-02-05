@@ -16,14 +16,14 @@ function book_session_participant_template($user, $event, $email) {
 ?>
 
 <p>
-Bonjour <?php echo $full_name ?>, nous avons le plaisir de vous confirmer votre inscription au stage «Communication en situation d’urgence médiatique | Communication de crise » du <em><?php echo $date ?></em>.
+    Bonjour <?php echo $full_name ?>, nous avons le plaisir de vous confirmer votre inscription au stage «Communication en situation d’urgence médiatique | Communication de crise » du <em><?php echo $date ?></em>.
 </p>
 <p>
-Cette inscription sera définitive lorsque votre responsable l’aura validée par retour de mail auprès au service communication.
+    Cette inscription sera définitive lorsque votre responsable l’aura validée par retour de mail auprès au service communication.
 </p>
 
 <p>
-Cordialement,
+    Cordialement,
 </p>
 
 <p>
@@ -52,13 +52,18 @@ function book_session_responsable_template($user, $event, $email) {
 ?>
 
 <p>
-Bonjour, nous vous informons que M/Mme <?php echo $full_name ?> s’est inscrit(e) au stage « Communication en situation d’urgence médiatique | Communication de crise » du <em><?php echo $date ?></em>.
+    Bonjour,<br>
+    Nous vous informons que M/Mme <?php echo $full_name ?> s’est inscrit(e) pour participer au stage « Communication en situation d’urgence médiatique | Communication de crise » le <strong><?php echo $date ?></strong>.
 </p>
 <p>
-Son inscription sera définitive lorsque vous l’aurez validée par simple retour de mail auprès du service communication.
+    Son inscription sera définitive lorsque vous l’aurez validée en répondant à ce mail.
 </p>
 <p>
-En raison du nombre de place très limité merci d’y veiller.
+    En raison du nombre de places très limité (4-5) par session, de la qualité et de son coût, merci de veiller à la présence de votre collaborateur à cette date !
+</p>
+
+<p>
+    Par avance nous vous en remercions.
 </p>
 
 <p>
@@ -84,11 +89,12 @@ function book_session_admin_template($user, $event, $email) {
   ob_start();
 ?>
 <p>
-Bonjour, un nouveau participant s’est inscrit au stage « Communication en situation d’urgence médiatique de crise » du <em><?php echo $date ?></em>.
+    Bonjour,<br>
+    Un nouveau participant s’est inscrit au stage « Communication en situation d’urgence médiatique de crise » le <strong><?php echo $date ?></strong>.
 </p>
 <p>
-Cette inscription sera définitive lorsque son responsable l’aura validée par retour de mail.
-Vous pourrez alors rendre cette inscription visible sur le site en cliquant <a href="<?php echo $admin_url ?>">ici</a>.
+    Cette inscription sera définitive lorsque son responsable l’aura validée par retour de mail.
+    Vous pourrez alors rendre cette inscription visible sur le site en cliquant <a href="<?php echo $admin_url ?>">ici</a>.
 </p>
 <?php
   $mail = ob_get_contents();

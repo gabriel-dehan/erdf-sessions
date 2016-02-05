@@ -154,7 +154,7 @@ class ES_DB_UsersEvents {
 
     if (count($upcoming_events_for_user) > 0) {
       return array(
-        "error" => 'already_subscribed_in_other_event',
+        "error" => 'Vous êtes déjà inscrit à une autre session.',
         "data"  => $upcoming_events_for_user[0]
       );
     }
@@ -162,7 +162,7 @@ class ES_DB_UsersEvents {
     //hd($spots_limit, $wait_list_spots, $onboard_users, $this->fetch_subscriptions($event, 'onlist'));
     if (($spots_limit + $wait_list_spots) <= ($onboard_users + $onlist_users)) {
       return array(
-        "error" => 'event_full'
+        "error" => 'Cette session est complète.'
       );
     }
 
@@ -176,7 +176,7 @@ class ES_DB_UsersEvents {
       );
       $wpdb->insert( $this->table_name, $data, $column_formats);
       return array(
-          "notice" => 'on_wait_list'
+          "notice" => "Vous avez été placé sur liste d'attente."
       );
     } else {
       $data = array(

@@ -1,6 +1,6 @@
 <?php
 function es_mail_sign() {
-    return "Formation ERDF de communication en situation d'urgence médiatique";
+    return "Robin Devogelaere";
 }
 
 foreach (glob(get_stylesheet_directory() . "/emails/templates/*.php") as $template) {

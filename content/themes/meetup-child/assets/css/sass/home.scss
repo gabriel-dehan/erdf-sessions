@@ -10,6 +10,63 @@ body nav .logo {
     top: -17px;
 }
 
+@media screen and (max-width: 768px) {
+    .home.ebor-pad-body {
+        padding-top: 50px;
+    }
+}
+
+.home .image-with-text.light-wrapper {
+    background: #005EB8;
+    .side-image {
+        .background-image-holder {
+            background-position: 100% 50% !important;
+        }
+
+        @media screen and (min-width: 768px) {
+            & {
+                width: 70%;
+            }
+        }
+
+    }
+
+
+    .container{
+        margin: 0;
+
+        @media screen and (min-width: 768px) {
+            & {
+                width: 30%;
+            }
+        }
+        position: relative;
+        float: right;
+        background: #005EB8;
+
+        .row {
+            .col-md-5 {
+                width: 100%;
+                margin: 0;
+            }
+
+            h1 { color: white; }
+            p { color: white; }
+        }
+    }
+}
+body .primary-overlay:before {
+    color: white;
+    content: '';
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    z-index: 1;
+    background-color: white; //#C3D3AB !important;
+}
+
 body .wpum-registration-form {
     input[type=email], input[type=password], input[type=text], input[type=tel] {
         color: black;
@@ -50,17 +107,6 @@ body .btn, body .btn.btn-meetup, body input[type=submit] {
     }
 }
 
-body .primary-overlay:before {
-    color: white;
-    content: '';
-    height: 100%;
-    opacity: 0.4;
-    position: absolute;
-    top: 0px;
-    width: 100%;
-    z-index: 1;
-    background-color: #C3D3AB !important;
-}
 
 .home {
     h1, h2 {

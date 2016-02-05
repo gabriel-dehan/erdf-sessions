@@ -46,22 +46,23 @@ if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
       do_action( 'book_session_participant', $current_user, $event, $current_user->user_email );
       do_action( 'book_session_responsable', $current_user, $event, get_user_meta($current_user->id, 'responsable_email', true ) );
       do_action( 'book_session_admin', $current_user, $event, get_option( 'admin_email' ) );
+
+      display_modal("Merci ! Votre place est réservée, elle sera définitive dès que votre responsable l'aura validée.");
     } else {
       if ( array_key_exists('error', $response) ) {
-        print_R($response);
+        display_modal($response["error"]);
         // Modal
       } else if ( array_key_exists('notice', $response) ) {
         do_action( 'book_session_participant', $current_user, $event, $current_user->user_email );
         do_action( 'book_session_responsable', $current_user, $event, get_user_meta($current_user->id, 'responsable_email', true ) );
         do_action( 'book_session_admin', $current_user, $event, get_option( 'admin_email' ) );
 
-        print_R($response);
-        // Modal
+        display_modal($response["notice"]);
       }
     }
 
   } else {
-    echo 'Vous êtes déjà inscrit à cette session.';
+    display_modal('Vous êtes déjà inscrit à cette session.');
   }
 } else if (isset($_POST['unsubscribe'])) {
   $event = get_post($_POST['event_id']);
@@ -69,8 +70,9 @@ if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
   $is_subscribed = $users_events->user_subscribed($current_user, $event);
   if ($is_subscribed) {
     $users_events->remove($current_user, $event);
+    display_modal('Vous avez bien été désinscrit de cette session.');
   } else {
-    echo "Vous n'êtes pas encore inscrit à cette session.";
+    display_modal("Vous n'êtes pas encore inscrit à cette session.");
   }
 }
 
