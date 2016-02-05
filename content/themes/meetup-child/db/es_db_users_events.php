@@ -217,6 +217,22 @@ class ES_DB_UsersEvents {
 	}
 
 
+  public function update_user_reminder($user, $event, $reminder) {
+    global $wpdb;
+
+    if ( empty($user->ID) || !is_numeric($user->ID) ) {
+      return false;
+    }
+    if ( empty($event->ID) || !is_numeric($event->ID) ) {
+      return false;
+    }
+
+    return $wpdb->update( $this->table_name, array('reminder' => $reminder),
+                   array( 'user_id' => $user->ID, 'event_id' => $event->ID ),
+                   array('%s' ),
+                   array( '%d', '%d' ));
+  }
+
   public function update_user_status($user, $event, $new_status) {
     global $wpdb;
 
@@ -266,6 +282,7 @@ class ES_DB_UsersEvents {
           time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
           user_id mediumint(9) NOT NULL,
           event_id mediumint(9) NOT NULL,
+          reminder varchar(255),
           status varchar(50) DEFAULT 'pending' NOT NULL,
           UNIQUE KEY id (id),
           UNIQUE KEY id_user_event (user_id,event_id)

@@ -81,19 +81,22 @@ add_action( 'wpum/form/register/success', 'wpum_redirect_after_registration', 10
 
 function wpum_redirect_after_login( $user_id, $values ) {
     $wp_session = WP_Session::get_instance();
-    $history = $wp_session['history']->toArray();
-    $history_size = count($history);
-    $referer = '';
 
-    if ( $history_size > 0 ) {
-        $referer = $history[$history_size - 1];
-        wp_redirect( $referer );
-    } else {
-        wp_redirect( home_url() );
+    if ($wp_session['history']) {
+        $history = $wp_session['history']->toArray();
+        $history_size = count($history);
+        $referer = '';
+
+        if ( $history_size > 0 ) {
+            $referer = $history[$history_size - 1];
+            wp_redirect( $referer );
+        } else {
+            wp_redirect( home_url() );
+        }
+
+        $wp_session['history'] = [];
+        exit;
     }
-
-    $wp_session['history'] = [];
-    exit;
 }
 
 add_action( 'wp_login', 'wpum_redirect_after_login', 10, 2 );

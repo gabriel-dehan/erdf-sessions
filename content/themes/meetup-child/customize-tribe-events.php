@@ -1,4 +1,21 @@
 <?php
+function handle_notes() {
+  $users_events = new ES_DB_UsersEvents;
+
+  $event     = new stdClass;
+  $event->ID = $_POST['event_id'];
+
+  $user      = new stdClass;
+  $user->ID  = $_POST['user_id'];
+
+  $content   = $_POST['content'];
+
+  echo $users_events->update_user_reminder($user, $event, $content);
+
+  exit; //always call exit at the end of a WordPress ajax function
+}
+add_action('wp_ajax_handle_notes', 'handle_notes');
+add_action('wp_ajax_nopriv_handle_notes', 'handle_notes');
 
 function es_status_to_sentence($status) {
   $map = array(
@@ -105,10 +122,10 @@ function es_admin_participants($event_id) {
     <tbody>
         <tr>
             <td>
-                <?php es_render_subscription_admin_for("onboard", $users); ?>
-                <?php es_render_subscription_admin_for("pending", $users); ?>
-                <?php es_render_subscription_admin_for("onlist", $users); ?>
-                <?php es_render_subscription_admin_for("rejected", $users); ?>
+                <?php es_render_subscription_admin_for("onboard", $users, $event_id); ?>
+                <?php es_render_subscription_admin_for("pending", $users, $event_id); ?>
+                <?php es_render_subscription_admin_for("onlist", $users, $event_id); ?>
+                <?php es_render_subscription_admin_for("rejected", $users, $event_id); ?>
             </td>
         </tr>
     </tbody>
@@ -116,7 +133,7 @@ function es_admin_participants($event_id) {
 <?php
 }
 
-function es_render_subscription_admin_for($status, $users) {
+function es_render_subscription_admin_for($status, $users, $event_id) {
 ?>
     <h3 class="title"><?php echo es_admin_status_to_sentence($status); ?></h3>
     <?php if (count($users[$status]) > 0) { ?>
@@ -125,6 +142,7 @@ function es_render_subscription_admin_for($status, $users) {
                 <tr>
                     <th class="participant-name">Nom</th>
                     <th class="participant-email">Email</th>
+                    <th class="participant-note">Note</th>
                     <th class="participant-actions">Actions</th>
                 </tr>
             </thead>
@@ -136,6 +154,9 @@ function es_render_subscription_admin_for($status, $users) {
                         </td>
                         <td>
                             <?php echo $user->user_email; ?>
+                        </td>
+                        <td class="user-note-container">
+                            <textarea name="user-note" placeholder="Pense-bête pour ce participant" class="user-note" data-event="<?php echo $event_id ?>" data-user="<?php echo $user->ID ?>"><?php echo $user->reminder ?></textarea>
                         </td>
                         <td class="actions">
                             <?php
