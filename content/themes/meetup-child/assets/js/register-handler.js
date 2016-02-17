@@ -4,7 +4,15 @@ if (!$) {
 
 $(function() {
   $('#user_phone').attr('type', 'tel');
-  $('input[type=tel]').attr('pattern', "^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$");
+
+  $('input[type=tel]').on('blur', function(e) {
+    var tel = $(e.target).val();
+    $(e.target)[0].setCustomValidity("");
+
+    if (!tel.match(/^(\+33|0)\s?[67]([ .\-]?[0-9][ .\-]?){8}$/)) {
+      $(e.target)[0].setCustomValidity("Votre numéro de téléphone est incorrect");
+    }
+  });
 
   // Hide the username
   $('.wpum-registration-form .fieldset-username').hide();

@@ -17,7 +17,7 @@ function reminder_week_earlier_template($user, $event, $email) {
 ?>
 
 <p>
-    Cher participant, vous êtes attendu le <?php echo $date ?> à 9h15 au 22-30 Avenue de Wagram, 75008, dans la salle régie au rez-de-chaussée.
+    Cher participant, vous êtes attendu le <strong><?php echo $date ?></strong> à 9h15 au 22-30 Avenue de Wagram, 75008, dans la salle régie au rez-de-chaussée.
 </p>
 
 <p>
@@ -56,7 +56,7 @@ function reminder_month_earlier_template($user, $event, $email) {
 ?>
 
 <p>
-    Cher participant, vous êtes attendu le <?php echo $date ?> à 9h15 au 22-30 Avenue de Wagram, 75008, dans la salle régie au rez-de-chaussée.
+    Cher participant, vous êtes attendu le <strong><?php echo $date ?></strong> à 9h15 au 22-30 Avenue de Wagram, 75008, dans la salle régie au rez-de-chaussée.
 </p>
 
 <p>

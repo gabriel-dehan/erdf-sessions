@@ -207,12 +207,12 @@ $users_count  = count($users);
           <a href="<?php echo esc_url( $link ) ?>" class="url book-event">
               Me mettre sur liste d'attente
           </a>
-      <?php } else if ( $remaining <= 0 ) { ?>
+      <?php } else if ( $remaining <= 0 && $onlist_count <= 0) { ?>
           <a href="<?php echo esc_url( $link ) ?>" class="url disabled book-event">
               Complet
           </a>
       <?php } else { ?>
-          <span class="users-count <?php echo $remaining <= 0 ? 'disabled' : ''; ?> ">
+          <span class="users-count <?php echo ($remaining <= 0 && $onlist_count <= 0) ? 'disabled' : ''; ?> ">
               Places restantes: <span class="num"><?php echo $spots - $users_count ?></span>
           </span>
           <a href="<?php echo esc_url( $link ) ?>" class="url book-event">

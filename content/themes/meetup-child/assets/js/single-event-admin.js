@@ -1,7 +1,6 @@
 var $ = jQuery.noConflict();
 
 $(function() {
-  AdminView.hideUseless();
   AdminView.checkSpotsLimit();
   AdminView.changeTexts();
   AdminView.handleNotes();
@@ -74,14 +73,4 @@ var AdminView = {
     });
 
   },
-  hideUseless: function() {
-    var base = $('.post-type-tribe_events');
-    base.find("#post-body-content .postarea").slideUp();
-    //base.find("#titlediv").after('<h2 class="session-prog">Programme de la session</h2>').hide();
-
-    base.find('#event_organizer, #event_url, #event_cost, #postexcerpt, #postcustom, #commentstatusdiv, #commentsdiv, #slugdiv, #authordiv, #event_venue').hide();
-
-    base.find(".event-timezone").hide();
-
-  }
 }

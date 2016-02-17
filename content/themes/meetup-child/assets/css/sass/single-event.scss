@@ -160,3 +160,12 @@
 #tribe-events .tribe-events-gcal {
     display: none !important;
 }
+
+#tribe-events-footer {
+    a { font-size: 1.4em; }
+
+    .tribe-events-sub-nav {
+        float: right;
+        width: 50%;
+    }
+}

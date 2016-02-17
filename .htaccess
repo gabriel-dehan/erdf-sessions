@@ -10,3 +10,12 @@ RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress
+
+order deny,allow
+deny from all
+allow from 127.0.0.1
+allow from 81.64.222
+allow from 88.190.86
+allow from 88.190.68
+allow from 163.116.6
+allow from 192.196.142

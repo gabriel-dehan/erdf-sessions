@@ -16,7 +16,7 @@ function book_refused_participant_template($user, $event, $email) {
 ?>
 
 <p>
-    Bonjour, nous sommes au regret de vous informer qu’en l’absence de validation de votre responsable vous ne pourrez participer au stage « Communication en situation d’urgence médiatique | communication de crise » du <em><?php echo $date ?></em>.
+    Bonjour, nous sommes au regret de vous informer qu’en l’absence de validation de votre responsable vous ne pourrez participer au stage « Communication en situation d’urgence médiatique | communication de crise » du <strong><?php echo $date ?></strong>.
 </p>
 
 <p>

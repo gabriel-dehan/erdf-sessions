@@ -1,9 +1,7 @@
-body {
-    h1, h2, h3, h4 {
-        font-family: 'Neris';
-    }
+@import 'mixins.scss';
 
-    //
+.home {
+    font-size: 16px;
 }
 
 body nav .logo {
@@ -33,6 +31,8 @@ body nav .logo {
 
 
     .container{
+        @include plug(#005fb8);
+
         margin: 0;
 
         @media screen and (min-width: 768px) {
@@ -146,6 +146,22 @@ body .btn, body .btn.btn-meetup, body input[type=submit] {
 
 }
 
+.home .next-session {
+    padding: 25px;
+    .widget_text {
+        margin-bottom: 0;
+    }
+}
+
+.home .sessions-calendar {
+    padding-top: 15px;
+    padding-bottom: 0;
+}
+
+.home .access {
+    padding-top: 0;
+}
+
 .home
 .wpb_content_element .widgettitle {
     margin-bottom: 0.8em;
@@ -155,7 +171,7 @@ body .btn, body .btn.btn-meetup, body input[type=submit] {
     /*margin-top: 2em;*/
 }
 
-#wpum-form-wpum_loginform {
+#wpum-form-wpum_loginform, #wpum-password- {
     input[type=text], input[type=password], input[type=email] {
         color: black;
     }
@@ -300,4 +316,26 @@ input[type="password"] {
     a {
         color: #00a3e0;
     }
+}
+
+
+.modality-block {
+    clear: both;
+}
+
+.modality-left {
+    float: left;
+    width: 50%;
+    padding: 30px 30px 30px 5px;
+    margin-bottom: 40px;
+}
+
+.modality-right {
+    @include plug(#48a23f, "left", "small");
+
+    font-weight: bold;
+    color: white;
+    float: right;
+    padding: 30px;
+    text-align: right;
 }

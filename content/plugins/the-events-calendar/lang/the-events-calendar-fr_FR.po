@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2016-02-02 13:35+0100\n"
+"PO-Revision-Date: 2016-02-17 15:03+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1191,7 +1191,7 @@ msgstr "+ Google Map"
 
 #: src/functions/template-tags/loop.php:131
 msgid "Upcoming %s"
-msgstr "Prochains %s"
+msgstr "Prochaines %s"
 
 #: src/functions/template-tags/loop.php:145
 msgid "%1$s for %2$s - %3$s"
@@ -1426,7 +1426,7 @@ msgstr "Acheteur"
 
 #: src/views/widgets/list-widget.php:65
 msgid "View All %s"
-msgstr "Voir tous les %s"
+msgstr "Voir toutes les %s"
 
 #: src/views/widgets/list-widget.php:71
 msgid "There are no upcoming %s at this time."
@@ -4429,7 +4429,7 @@ msgstr "Date de fin"
 
 #: src/Tribe/Admin_List.php:313 src/views/single-event.php:27
 msgid "All %s"
-msgstr "Tous les %s"
+msgstr "Toutes les %s"
 
 #: src/Tribe/Advanced_Functions/Register_Meta.php:37
 #: src/Tribe/Advanced_Functions/Register_Meta.php:69

@@ -138,10 +138,9 @@ class ES_DB_UsersEvents {
       "SELECT * FROM wp_users_events ue WHERE ue.event_id IN " .
       "(SELECT p.id FROM  wp_posts p JOIN wp_postmeta m ON m.post_id = p.id " .
       " WHERE p.post_type =  'tribe_events' AND m.meta_key = '_EventStartDate' " .
-      "AND m.meta_value > '" . date('Y-m-d H:i:s') . "') " .
+      "AND DATE(m.meta_value) > DATE('" . date('Y-m-d H:i:s') . "') ) " .
       "AND ue.user_id = " . $user->ID . ";"
     );
-
 
     if ( empty($user->ID) || !is_numeric($user->ID) ) {
       return false;
@@ -159,7 +158,6 @@ class ES_DB_UsersEvents {
       );
     }
 
-    //hd($spots_limit, $wait_list_spots, $onboard_users, $this->fetch_subscriptions($event, 'onlist'));
     if (($spots_limit + $wait_list_spots) <= ($onboard_users + $onlist_users)) {
       return array(
         "error" => 'Cette session est complète.'
@@ -238,7 +236,7 @@ class ES_DB_UsersEvents {
 
     $current_status = $this->user_status($user, $event);
 
-    // If a someone is rejected for any reason, a new onlist user takes his place
+    // If someone is rejected for any reason, a new onlist user takes his place
     if ($current_status == "onboard" && $new_status == "rejected") {
       $users = $this->get_users($event, 'onlist');
       if (count($users) > 0) {
@@ -253,6 +251,7 @@ class ES_DB_UsersEvents {
                          array( '%d', '%d' ));
 
     // if update_ok
+    //hd( get_option( 'admin_email' ) );die;
     if ( $update_ok !== false ) {
       if ( $new_status == "onboard" ) {
         do_action( 'book_confirmed_participant', $user, $event, get_userdata( $user->ID )->user_email );
@@ -261,9 +260,15 @@ class ES_DB_UsersEvents {
 
         es_schedule_emails($user, $event);
 
+
       } else if ( $new_status == "rejected" ) {
         do_action( 'book_refused_participant', $user, $event, get_userdata( $user->ID )->user_email );
+      } else if ( $new_status == "onlist" ) {
+        do_action( 'book_onlist_participant', $user, $event, get_userdata( $user->ID )->user_email );
+        do_action( 'book_onlist_responsable', $user, $event, get_user_meta($user->ID, 'responsable_email', true ) );
+        do_action( 'book_onlist_admin', $user, $event, get_option( 'admin_email' ) );
       }
+
     }
 
     return $update_ok;

@@ -2,9 +2,13 @@
 @import 'home.scss';
 @import 'single-event.scss';
 @import 'calendar.scss';
+@import 'testimonials.scss';
 
-.home {
-    font-size: 16px;
+body {
+    h1, h2, h3, h4 {
+        font-family: 'Neris';
+        font-weight: bold;
+    }
 }
 
 .nav-container {

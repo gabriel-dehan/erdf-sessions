@@ -1,6 +1,6 @@
 <?php
 function es_mail_sign() {
-    return "Robin Devogelaere";
+    //    return "Robin Devogelaere";
 }
 
 foreach (glob(get_stylesheet_directory() . "/emails/templates/*.php") as $template) {

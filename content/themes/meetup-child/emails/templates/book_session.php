@@ -16,10 +16,10 @@ function book_session_participant_template($user, $event, $email) {
 ?>
 
 <p>
-    Bonjour <?php echo $full_name ?>, nous avons le plaisir de vous confirmer votre inscription au stage «Communication en situation d’urgence médiatique | Communication de crise » du <em><?php echo $date ?></em>.
+    Bonjour <?php echo $full_name ?>, nous avons le plaisir de vous confirmer votre inscription au stage «Communication en situation d’urgence médiatique | Communication de crise » du <strong><?php echo $date ?></strong>.
 </p>
 <p>
-    Cette inscription sera définitive lorsque votre responsable l’aura validée par retour de mail auprès au service communication.
+    Cette inscription sera définitive lorsque votre responsable l’aura validée par retour de mail auprès du service communication.
 </p>
 
 <p>

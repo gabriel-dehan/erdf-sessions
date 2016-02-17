@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <!--[if IE 9]> <html class="ie9" <?php language_attributes(); ?>> <![endif]-->
 <!--[if gt IE 9]><!--> <html <?php language_attributes(); ?>> <!--<![endif]-->
-
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<title><?php wp_title('| ', true, 'right'); ?></title>
@@ -19,6 +18,30 @@
 	$dark = get_option('dark_logo', EBOR_THEME_DIRECTORY  . 'style/img/logo-dark.png');
 	$title = get_bloginfo('title');
 ?>
+
+<!--[if lt IE 9]>
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Votre navigateur n'est pas compatible !</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="chromeframe">Votre navigateur n'est pas <strong>à jour</strong>.</p>
+                    <p>
+                        Veuillez <a href="http://browsehappy.com/">le mettre à jour</a> ou en <a href="http://browsehappy.com/">télécharger un nouveau</a>.
+                    </p>
+                    <p>
+                        Vous pouvez aussi utiliser <a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome Frame</a> afin d'améliorer votre expérience.
+                    </p>
+                    <p><br></p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+<![endif]-->
+
 
 <div class="nav-container">
 

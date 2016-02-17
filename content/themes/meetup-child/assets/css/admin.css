@@ -1,3 +1,70 @@
+/* Hide useless stuff in admin*/
+
+.wp-list-table .row-actions .inline {
+    display: none !important;
+}
+
+.wp-admin.events-cal .column-tags,
+.wp-admin.events-cal .column-events-cats,
+.column-comments,
+.post-type-page .column-ebor_post_thumb,
+.post-type-testimonial .column-ebor_post_thumb,
+.post-type-testimonial .column-taxonomy-testimonial_category,
+.post-type-testimonial #wp-content-media-buttons,
+.post-type-team #wp-content-media-buttons,
+.post-type-team #team_social_metabox,
+.wp-admin.events-cal .column-ebor_post_thumb {
+    display: none;
+}
+
+#testimonial_categorydiv {
+    display: none;
+}
+
+#side-sortables #tagsdiv-post_tag {
+    display: none;
+}
+#tribe_events_catdiv {
+    display: none;
+}
+#tribe_events_event_options {
+    display: none;
+}
+
+.post-type-page #pageparentdiv,
+.post-type-page #postimagediv,
+.events-cal #postimagediv {
+    display: none;
+}
+
+.events-cal #event_venue {
+    display: none;
+}
+.post-type-tribe_events #post-body-content .postarea {
+    display: none;
+}
+
+.post-type-tribe_events #event_organizer,
+.post-type-tribe_events #event_url,
+.post-type-tribe_events #event_cost,
+.post-type-tribe_events #postexcerpt,
+.post-type-tribe_events #postcustom,
+.post-type-tribe_events #commentstatusdiv,
+.post-type-tribe_events #commentsdiv,
+.post-type-tribe_events #slugdiv,
+.post-type-tribe_events #authordiv,
+.post-type-tribe_events #event_venue
+.post-type-tribe_events .event-timezone {
+    display: none;
+}
+
+.postbox-container #submitdiv {
+    background-color: #E4F2FF;
+}
+
+
+
+
 #poststuff h2.session-prog {
     font-size: 23px;
     font-weight: 400;

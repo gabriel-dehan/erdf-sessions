@@ -8,6 +8,7 @@ require_once('db/es_db_users_events.php');
 
 require_once('setup.php');
 require_once('shortcodes.php');
+require_once('vc_blocks/testimonials.php');
 require_once('customize-tribe-events.php');
 require_once('event-manager.php');
 require_once('register-handler.php');
@@ -45,6 +46,7 @@ function display_modal($text) {
                     </h3>
                 </div>
                 <div class="modal-footer">
+                    <a href="/" class="btn btn-default">J'ai terminé</a>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                 </div>
             </div><!-- /.modal-content -->

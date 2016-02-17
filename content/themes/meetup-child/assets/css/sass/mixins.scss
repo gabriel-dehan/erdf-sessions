@@ -1,0 +1,39 @@
+@mixin plug($color, $direction:"left", $size:"normal") {
+    background: $color;
+    position: relative;
+
+    &:before {
+        content: " ";
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 32.5px 30px 32.5px 0;
+        border-color: transparent $color transparent transparent;
+        position: absolute;
+
+        @if $size == "normal" {
+            border-width: 32.5px 30px 32.5px 0;
+            left: -30px;
+            top: 44%;
+
+            @if ($direction == "right") {
+                right: -30px;
+            }
+
+        }
+
+        @if $size == "small" {
+            border-width: 20.5px 18px 20.5px 0;
+            left: -18px;
+            top: 27%;
+
+            @if ($direction == "right") {
+                right: -18px;
+            }
+
+        }
+
+    }
+}
+
+//.box { @include border-radius(10px); }

@@ -28,7 +28,7 @@ $spots_left   = $spots - $users_count;
 $onlist_left  = 1 - $onlist_count;
 // Make sure $onlist_left is not negative
 $onlist_left  = $onlist_left < 0 ? 0 : $onlist_left;
-
+$participating = $users_events->user_status($current_user, $event) == "onboard";
 
 if ( isset($_POST['subscribe']) || isset($_GET['subscribe']) ) {
   if (isset($_GET['subscribe']) ) {
@@ -129,13 +129,13 @@ $event_passed = (new DateTime() >= new DateTime($event_start_date));
             </form>
         <?php } else if ( $current_user->ID == 0 ) { ?>
           <div class="btn-book-event-big">
-              <a href="/register?subscribe=1&event_id=<?php echo the_ID(); ?>&retain_params=1" class="btn">Réservez votre place !</a>
+              <a href="/register?subscribe=1&event_id=<?php echo the_ID(); ?>&retain_params=1" class="btn">Je m'inscris !</a>
           </div>
         <?php } else if ( !$users_events->user_subscribed($current_user, $event) && $spots_left > 0 ) { ?>
         <form method="POST" action="<?php the_permalink(); ?>" class="btn-book-event-big">
             <input type="hidden" name="subscribe">
             <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
-            <button class="btn">Réservez votre place !</button>
+            <button class="btn">Je m'inscris !</button>
         </form>
         <?php } ?>
 			<!-- Event content -->
@@ -185,8 +185,10 @@ $event_passed = (new DateTime() >= new DateTime($event_start_date));
 
         <div class="user-subscribe">
             <?php if ( $event_passed ) { ?>
-                <div>Cet évenement est passé.</div>
-            <?php } else if ( $spots_left <= 0 && $onlist_left <= 0 ) { ?>
+                <div class="btn-book-event-big">
+                    <span class="btn btn-huge"><?php tribe_the_next_event_link( 'Inscrivez vous à la prochaine session !' ) ?></span>
+                </div>
+            <?php } else if ( $spots_left <= 0 && $onlist_left <= 0 && !$participating ) { ?>
                 <?php $next_event = Tribe__Events__Main::instance()->get_event_link( $event, 'next' ); ?>
                 <?php if ($next_event) { ?>
                     <div class="btn-book-event-big">
@@ -196,9 +198,9 @@ $event_passed = (new DateTime() >= new DateTime($event_start_date));
                     <h3>Cet évènement est complet et aucune autre session n'est prévue pour l'instant.</h3>
                 <?php }  ?>
             <?php } else if ( $current_user->ID == 0 ) { ?>
-                <div class="btn-book-event-big">
+                <!--div class="btn-book-event-big">
                     <a class="btn" href="/register?subscribe=1&event_id=<?php echo the_ID(); ?>&retain_params=1">Je m'inscris</a>
-                </div>
+                </div -->
             <?php } else if ( $users_events->user_subscribed($current_user, $event) ) { ?>
                 <form class="btn-book-event-big" method="POST" action="<?php the_permalink(); ?>">
                     <input type="hidden" name="unsubscribe">
@@ -210,7 +212,7 @@ $event_passed = (new DateTime() >= new DateTime($event_start_date));
                     <input type="hidden" name="subscribe">
                     <input type="hidden" name="event_id" value="<?php echo the_ID(); ?>">
                     <?php if ( $spots_left > 0 ) { ?>
-                        <button class="btn">Je m'inscris</button>
+                        <!--button class="btn">Je m'inscris</button-->
                     <?php } else if ( $onlist_left > 0 ) { ?>
                         <button class="btn btn-big">Je m'inscris sur la liste d'attente</button>
                     <?php } ?>
@@ -228,15 +230,15 @@ $event_passed = (new DateTime() >= new DateTime($event_start_date));
 	<!-- Event footer -->
 	<div id="tribe-events-footer">
 		<!-- Navigation -->
-	    <p class="tribe-events-back">
+	    <div class="tribe-events-back">
 		      <a href="<?php echo esc_url( tribe_get_events_link() ); ?>"> <?php printf( '&laquo; ' . esc_html__( 'All %s', 'the-events-calendar' ), $events_label_plural ); ?></a>
-	    </p>
+		      <ul class="tribe-events-sub-nav">
+			        <!--li class="tribe-events-nav-previous"><?php tribe_the_prev_event_link( '<span>&laquo;</span> Date précédente' ) ?></li-->
+			        <li class="tribe-events-nav-next"><?php tribe_the_next_event_link( 'Date suivante <span>&raquo;</span>' ) ?></li>
+		      </ul>
+	    </div>
 
-		<h3 class="tribe-events-visuallyhidden"><?php printf( esc_html__( '%s Navigation', 'the-events-calendar' ), $events_label_singular ); ?></h3>
-		<ul class="tribe-events-sub-nav">
-			<!--li class="tribe-events-nav-previous"><?php tribe_the_prev_event_link( '<span>&laquo;</span> Date précédente' ) ?></li-->
-			<li class="tribe-events-nav-next"><?php tribe_the_next_event_link( 'Date suivante <span>&raquo;</span>' ) ?></li>
-		</ul>
+		  <h3 class="tribe-events-visuallyhidden"><?php printf( esc_html__( '%s Navigation', 'the-events-calendar' ), $events_label_singular ); ?></h3>
 		<!-- .tribe-events-sub-nav -->
 	</div>
 	<!-- #tribe-events-footer -->
